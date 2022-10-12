@@ -1,0 +1,55 @@
+//		case sf::Event::KeyPressed:
+//			switch ((*events).key.code)
+//			{
+//			case sf::Keyboard::W:
+//				circle.move(0, -10);
+//				break;
+//
+//			case sf::Keyboard::S:
+//				circle.move(0, 10);
+//				break;
+//
+//			case sf::Keyboard::A:
+//				circle.move(-10, 0);
+//				break;
+//
+//			case sf::Keyboard::D:
+//				circle.move(10, 0);
+//				break;
+//;
+//			default:
+//				break;
+//			}
+//			break;
+
+
+
+
+	sf::Event* events = new sf::Event;
+	
+	while (window->pollEvent(*events))
+	{
+		switch ((*events).type)
+		{
+		case sf::Event::Closed:
+			(*window).close();
+			break;
+
+		case sf::Event::MouseButtonPressed:
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				mouseDownPos = sf::Mouse::getPosition();
+			}
+			
+			break;
+
+		case sf::Event::MouseButtonReleased:
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false && mouseDownPos != sf::Vector2i())
+			{
+				mouseDownPos = sf::Vector2i();
+			}
+	
+		default:
+			break;
+		}
+	}
