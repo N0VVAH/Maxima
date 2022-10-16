@@ -151,10 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="buttonSprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buttonSprite.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sprite.h" />

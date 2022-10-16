@@ -16,7 +16,8 @@ protected:
 	std::vector<sprite*> render;
 	std::vector<sprite*> UI;
 
-	sf::Vector2<int> mouseDownPos;
+	sf::Vector2i mouseDownPos;
+	sf::Vector2i mouseUpPos;
 
 
 private:

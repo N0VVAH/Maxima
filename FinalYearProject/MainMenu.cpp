@@ -1,12 +1,13 @@
 #include "mainmenu.h"
 #include <iostream>
+#include "buttonSprite.h"
 
 
 MainMenu::MainMenu()
 {
-	circle = sf::CircleShape(100.f);
-	circle.setFillColor(sf::Color::Blue);
-	circle.setPosition(200, 200);
+
+	UI.push_back(new buttonSprite(100, 100, sf::Color::Blue));
+	UI[0]->setPos(200, 200);
 }
 
 
@@ -25,7 +26,7 @@ void MainMenu::update(sf::RenderWindow* window)
 		case sf::Event::MouseButtonPressed:
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				mouseDownPos = sf::Mouse::getPosition();
+				mouseDownPos = { events->mouseButton.x, events->mouseButton.y };
 			}
 			
 			break;
@@ -33,6 +34,16 @@ void MainMenu::update(sf::RenderWindow* window)
 		case sf::Event::MouseButtonReleased:
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false && mouseDownPos != sf::Vector2i())
 			{
+				
+				mouseUpPos = { events->mouseButton.x, events->mouseButton.y };
+				for (size_t i = 0; i < UI.size(); i++)
+				{
+					if (UI[0]->getGlobalBounds().contains(mouseDownPos.x, mouseDownPos.y) && UI[0]->getGlobalBounds().contains(mouseUpPos.x, mouseUpPos.y))
+					{
+						UI[0]->onClick();
+					}
+				}
+
 				mouseDownPos = sf::Vector2i();
 			}
 	
@@ -51,7 +62,15 @@ char MainMenu::inputHandler()
 void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 
-	target.draw(circle, states);
+	for (size_t i = 0; i < render.size(); i++)
+	{
+		render[i]->draw(target, states);
+	}
+
+	for (size_t i = 0; i < UI.size(); i++)
+	{
+		UI[i]->draw(target, states);
+	}
 	
 }
 

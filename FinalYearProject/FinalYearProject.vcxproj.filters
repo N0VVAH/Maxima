@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{0442a0c5-2d68-47f5-9302-7b341f7dfe1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Sprites">
+      <UniqueIdentifier>{e468baea-9c4d-4c23-9b35-b8a189daab8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -29,6 +32,9 @@
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="buttonSprite.cpp">
+      <Filter>Source Files\Sprites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +45,10 @@
       <Filter>Header Files\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="mainmenu.h">
-      <Filter>Header Files\Sprites</Filter>
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="buttonSprite.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
