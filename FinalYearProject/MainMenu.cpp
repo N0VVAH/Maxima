@@ -6,7 +6,7 @@
 MainMenu::MainMenu()
 {
 
-	UI.push_back(new buttonSprite(100, 100, sf::Color::Blue));
+	UI.push_back(new buttonSprite(100, 100, "E:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\Sprites\\lol.png"));
 	UI[0]->setPos(200, 200);
 }
 

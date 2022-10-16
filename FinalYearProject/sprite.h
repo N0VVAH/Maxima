@@ -12,5 +12,5 @@ public:
 	inline virtual sf::FloatRect getGlobalBounds() { return sf::FloatRect(); }
 
 protected:
-	sf::Texture* texture = nullptr;
+	sf::Texture texture;
 };

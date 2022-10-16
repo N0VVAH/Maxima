@@ -15,10 +15,18 @@ buttonSprite::buttonSprite(float width, float height, sf::Color colour)
 buttonSprite::buttonSprite(float width, float height, std::string path)
 {
 	shape = new sf::RectangleShape(sf::Vector2f(width, height));
-	if (!texture->loadFromFile(path)) { }
-	texture->setSmooth(true);
+	try
+	{
+		texture.loadFromFile(path);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what();
+	}
+	
+	texture.setSmooth(true);
 
-	shape->setTexture(texture);
+	shape->setTexture(&texture);
 }
 
 void buttonSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
