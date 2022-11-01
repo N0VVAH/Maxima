@@ -25,6 +25,15 @@
     <Filter Include="Source Files\Sprites">
       <UniqueIdentifier>{e468baea-9c4d-4c23-9b35-b8a189daab8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sprites\ButtonFunctions">
+      <UniqueIdentifier>{19571821-7370-4916-ad58-02e79e3e3021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sprites\ButtonFunctions">
+      <UniqueIdentifier>{839ebfc3-916c-4065-a410-18d8db798454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Globals">
+      <UniqueIdentifier>{cf257159-6cf4-46ee-afd0-49174db1772e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="buttonSprite.cpp">
       <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="buttonFuncs.cpp">
+      <Filter>Source Files\Sprites\ButtonFunctions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,7 +60,13 @@
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="buttonSprite.h">
-      <Filter>Header Files\Scenes</Filter>
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="buttonfuncs.h">
+      <Filter>Header Files\Sprites\ButtonFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="globals.h">
+      <Filter>Header Files\Globals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

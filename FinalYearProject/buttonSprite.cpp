@@ -34,9 +34,14 @@ void buttonSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw((*shape), states);
 }
 
-void buttonSprite::onClick()
+void *buttonSprite::onClick()
 {
-	std::cout << "Working\n";
+	return Click;
+}
+
+void buttonSprite::setClick(void* newclick)
+{
+	Click = reinterpret_cast<void(*)()>(newclick);
 }
 
 void buttonSprite::setPos(float xPos, float yPos)

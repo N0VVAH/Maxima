@@ -1,13 +1,25 @@
 #include "mainmenu.h"
 #include <iostream>
 #include "buttonSprite.h"
+#include "buttonfuncs.h"
 
 
 MainMenu::MainMenu()
 {
 
-	UI.push_back(new buttonSprite(100, 100, "E:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\Sprites\\lol.png"));
-	UI[0]->setPos(200, 200);
+	UI.push_back(new buttonSprite(300, 100, sf::Color::White));
+	UI[0]->setPos(650, 200);
+	UI[0]->setClick(&clickStart);
+
+	UI.push_back(new buttonSprite(300, 100, sf::Color::White));
+	UI[0]->setPos(650, 600);
+	UI[0]->setClick(&clickQuick);
+
+
+
+
+	//UI.push_back(new buttonSprite(100, 100, "E:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\Sprites\\lol.png"));
+	//UI[0]->setPos(200, 200);
 }
 
 
@@ -15,6 +27,7 @@ void MainMenu::update(sf::RenderWindow* window)
 {
 	sf::Event* events = new sf::Event;
 	
+
 	while (window->pollEvent(*events))
 	{
 		switch ((*events).type)
@@ -40,7 +53,7 @@ void MainMenu::update(sf::RenderWindow* window)
 				{
 					if (UI[0]->getGlobalBounds().contains(mouseDownPos.x, mouseDownPos.y) && UI[0]->getGlobalBounds().contains(mouseUpPos.x, mouseUpPos.y))
 					{
-						UI[0]->onClick();
+						((void(*)())UI[0]->onClick())();
 					}
 				}
 

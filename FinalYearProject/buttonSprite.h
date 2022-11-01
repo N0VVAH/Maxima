@@ -9,7 +9,8 @@ public:
 	buttonSprite(float width, float height, sf::Color colour);
 	buttonSprite(float width, float height, std::string path);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	virtual void onClick() override;
+	virtual void* onClick() override;
+	virtual void setClick(void*) override;
 	virtual void setPos(float xPos, float yPos) override;
 	sf::FloatRect getLocalBounds() override;
 	sf::FloatRect getGlobalBounds() override;
