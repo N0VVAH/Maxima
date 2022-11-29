@@ -48,6 +48,9 @@
     <ClCompile Include="buttonFuncs.cpp">
       <Filter>Source Files\Sprites\ButtonFunctions</Filter>
     </ClCompile>
+    <ClCompile Include="Tutorial.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene.h">
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="globals.h">
       <Filter>Header Files\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="tutorial.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

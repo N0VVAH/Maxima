@@ -14,6 +14,7 @@ public:
 	virtual void setPos(float xPos, float yPos) override;
 	sf::FloatRect getLocalBounds() override;
 	sf::FloatRect getGlobalBounds() override;
+	char type;
 
 private:
 	sf::RectangleShape* shape = nullptr;

@@ -1,15 +1,18 @@
 #include "mainmenu.h"
 #include <chrono>
 #include <thread>
+#include "globals.h"
 
-
+scene* Global::curScene = nullptr;
 
 int main()
 {
 	
 	sf::RenderWindow window(sf::VideoMode(1600, 800), "Maxima");
 
-	scene* current = new MainMenu();
+	Global::window = &window;
+
+	Global::curScene = new MainMenu();
 
 	auto end = std::chrono::high_resolution_clock::now();
 
@@ -20,8 +23,8 @@ int main()
 		start = std::chrono::high_resolution_clock::now();
 
 		window.clear();
-		current->update(&window);
-		current->draw(window, sf::RenderStates::Default);
+		Global::curScene->update(&window);
+		Global::curScene->draw(window, sf::RenderStates::Default);
 		window.display();
 
 

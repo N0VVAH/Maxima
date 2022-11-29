@@ -6,14 +6,15 @@
 
 MainMenu::MainMenu()
 {
-
 	UI.push_back(new buttonSprite(300, 100, sf::Color::White));
 	UI[0]->setPos(650, 200);
 	UI[0]->setClick(&clickStart);
+	UI[0]->type = 'S';
 
 	UI.push_back(new buttonSprite(300, 100, sf::Color::White));
-	UI[0]->setPos(650, 600);
-	UI[0]->setClick(&clickQuick);
+	UI[1]->setPos(650, 600);
+	UI[1]->setClick(&clickQuick);
+
 
 
 
@@ -51,9 +52,17 @@ void MainMenu::update(sf::RenderWindow* window)
 				mouseUpPos = { events->mouseButton.x, events->mouseButton.y };
 				for (size_t i = 0; i < UI.size(); i++)
 				{
-					if (UI[0]->getGlobalBounds().contains(mouseDownPos.x, mouseDownPos.y) && UI[0]->getGlobalBounds().contains(mouseUpPos.x, mouseUpPos.y))
+					if (UI[i]->getGlobalBounds().contains(mouseDownPos.x, mouseDownPos.y) && UI[i]->getGlobalBounds().contains(mouseUpPos.x, mouseUpPos.y))
 					{
-						((void(*)())UI[0]->onClick())();
+						if (UI[i]->type == 'S')
+						{
+							loadScene(((scene * (*)())UI[i]->onClick())());
+						}
+						else
+						{
+							((void(*)())UI[i]->onClick())();
+						}
+						
 					}
 				}
 
@@ -85,5 +94,22 @@ void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states)
 		UI[i]->draw(target, states);
 	}
 	
+}
+
+
+void MainMenu::loadScene(scene* nextScene)
+{
+	prevScene = this;
+	Global::curScene = nextScene;
+}
+
+void MainMenu::exitScene()
+{
+	Global::window->close();
+}
+
+void MainMenu::closeScene()
+{
+	Global::window->close();
 }
 

@@ -1,18 +1,19 @@
 #pragma once
 #include "scene.h"
+#include "globals.h"
 
-class MainMenu : public scene
+class Tutorial : public scene
 {
 public:
-	MainMenu();
+	Tutorial();
+	Tutorial(scene*);
 	void update(sf::RenderWindow* window) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 	char inputHandler() override;
-	void loadScene(scene*) override;
 	void exitScene() override;
 	void closeScene() override;
+	void loadScene(scene*) override;
 
 protected:
 
-private:
 };

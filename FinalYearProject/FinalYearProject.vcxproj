@@ -155,6 +155,7 @@
     <ClCompile Include="buttonSprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buttonfuncs.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="useful.txt" />

@@ -12,6 +12,7 @@ public:
 	virtual void setPos(float xPos, float yPos) = 0;
 	inline virtual sf::FloatRect getLocalBounds() { return sf::FloatRect(); }
 	inline virtual sf::FloatRect getGlobalBounds() { return sf::FloatRect(); }
+	char type;
 
 protected:
 	sf::Texture texture;

@@ -1,10 +1,12 @@
 #include "buttonfuncs.h"
 #include <iostream>
-#include "SFML/Window.hpp"
 
-void clickStart()
+sf::Window* Global::window = nullptr;
+
+scene* clickStart()
 {
-	//this needs to load save data is avilable or start a new game
+	scene* w = new Tutorial(Global::curScene);
+	return w;
 }
 
 void clickSettings()
@@ -14,5 +16,5 @@ void clickSettings()
 
 void clickQuick()
 {
-	window->close();
+	Global::window->close();
 }

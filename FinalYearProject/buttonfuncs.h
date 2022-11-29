@@ -1,5 +1,7 @@
 #pragma once
+#include "globals.h"
+#include "tutorial.h"
 
-void clickStart();
+scene* clickStart();
 void clickSettings();
 void clickQuick();
