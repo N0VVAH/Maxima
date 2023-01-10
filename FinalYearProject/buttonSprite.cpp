@@ -49,6 +49,10 @@ void buttonSprite::setPos(float xPos, float yPos)
 	shape->setPosition(sf::Vector2f(xPos, yPos));
 }
 
+void buttonSprite::movePos(float xOffset, float yOffset)
+{
+}
+
 sf::FloatRect buttonSprite::getLocalBounds()
 {
 	return shape->getLocalBounds();

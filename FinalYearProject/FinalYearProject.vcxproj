@@ -153,13 +153,16 @@
   <ItemGroup>
     <ClCompile Include="buttonFuncs.cpp" />
     <ClCompile Include="buttonSprite.cpp" />
+    <ClCompile Include="Charactor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buttonfuncs.h" />
     <ClInclude Include="buttonSprite.h" />
+    <ClInclude Include="Charactor.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="scene.h" />

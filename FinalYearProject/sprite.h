@@ -10,6 +10,7 @@ public:
 	virtual void* onClick() = 0;
 	virtual void setClick(void*) = 0;
 	virtual void setPos(float xPos, float yPos) = 0;
+	virtual void movePos(float xOffset, float yOffset) = 0;
 	inline virtual sf::FloatRect getLocalBounds() { return sf::FloatRect(); }
 	inline virtual sf::FloatRect getGlobalBounds() { return sf::FloatRect(); }
 	char type;

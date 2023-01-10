@@ -51,6 +51,12 @@
     <ClCompile Include="Tutorial.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Charactor.cpp">
+      <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene.h">
@@ -73,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="tutorial.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Charactor.h">
+      <Filter>Header Files\Sprites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

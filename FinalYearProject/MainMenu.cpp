@@ -24,7 +24,7 @@ MainMenu::MainMenu()
 }
 
 
-void MainMenu::update(sf::RenderWindow* window)
+void MainMenu::update(sf::RenderWindow* window, float dtime)
 {
 	sf::Event* events = new sf::Event;
 	
@@ -79,21 +79,6 @@ void MainMenu::update(sf::RenderWindow* window)
 char MainMenu::inputHandler()
 {
 	return '0';
-}
-
-void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states)
-{
-
-	for (size_t i = 0; i < render.size(); i++)
-	{
-		render[i]->draw(target, states);
-	}
-
-	for (size_t i = 0; i < UI.size(); i++)
-	{
-		UI[i]->draw(target, states);
-	}
-	
 }
 
 

@@ -1,16 +1,22 @@
 #include "tutorial.h"
-
+#include "iostream"
 
 Tutorial::Tutorial() { }
 
 Tutorial::Tutorial(scene* preScene)
 {
 	prevScene = preScene;
+	c.CharSetup(sf::Color::Green);
+	render.push_back(&c);
+	c.setPos(400, 400);
+
 }
 
-void Tutorial::update(sf::RenderWindow* window)
+void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
 	sf::Event* events = new sf::Event;
+
+	std::cout << dtime << "\n";
 
 	while (window->pollEvent(*events))
 	{
@@ -24,10 +30,25 @@ void Tutorial::update(sf::RenderWindow* window)
 				exitScene();
 				break;
 
+			case sf::Keyboard::W:
+				c.movePos(0, -500 * dtime);
+				break;
+			case sf::Keyboard::S:
+				c.movePos(0, 500 * dtime);
+				break;
+			case sf::Keyboard::A:
+				c.movePos(-500 * dtime, 0);
+				break;
+			case sf::Keyboard::D:
+				c.movePos(500 * dtime, 0);
+				break;
+
 			default:
 				break;
 			}
 			break;
+
+			render[0] = &c;
 
 
 		case sf::Event::Closed:
@@ -73,11 +94,6 @@ void Tutorial::update(sf::RenderWindow* window)
 			break;
 		}
 	}
-}
-
-void Tutorial::draw(sf::RenderTarget& target, sf::RenderStates states)
-{
-
 }
 
 char Tutorial::inputHandler()

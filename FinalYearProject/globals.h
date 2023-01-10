@@ -11,4 +11,5 @@ public:
 	static scene* curScene;
 
 	static std::vector<scene*> toDelete;
+	static int framerate;
 };

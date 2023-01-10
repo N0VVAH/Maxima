@@ -6,8 +6,8 @@ class scene
 {
 public:
 	scene() {};
-	virtual void update(sf::RenderWindow* window) = 0;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) = 0;
+	virtual void update(sf::RenderWindow* window, float dtime) = 0;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states);
 	virtual char inputHandler() = 0;
 	virtual void exitScene() = 0;
 	virtual void closeScene() = 0;

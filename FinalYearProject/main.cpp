@@ -2,8 +2,10 @@
 #include <chrono>
 #include <thread>
 #include "globals.h"
+#include "iostream"
 
 scene* Global::curScene = nullptr;
+int Global::framerate = 144;
 
 int main()
 {
@@ -12,29 +14,37 @@ int main()
 
 	Global::window = &window;
 
+	window.setVerticalSyncEnabled(true);
+
 	Global::curScene = new MainMenu();
 
-	auto end = std::chrono::high_resolution_clock::now();
 
-	auto start = end;
+	sf::Clock clock;
+	sf::Time start;
+	sf::Time end;
+	sf::Time dTime;
 
+	clock.restart();
+
+	clock.restart();
 	while (window.isOpen())
 	{
-		start = std::chrono::high_resolution_clock::now();
+		start = clock.getElapsedTime();
 
-		window.clear();
-		Global::curScene->update(&window);
+		window.clear();		
+		if ((end - start).asSeconds() > 1.0 / Global::framerate)
+		{
+			Global::curScene->update(&window, 1.0 / Global::framerate);
+		}
+		else
+		{
+			Global::curScene->update(&window, (end - start).asSeconds());
+		}
 		Global::curScene->draw(window, sf::RenderStates::Default);
 		window.display();
 
-
-		end = std::chrono::high_resolution_clock::now();
-		if (end - start < std::chrono::milliseconds(16))
-		{
-			auto sleepfor = std::chrono::milliseconds(16) - (end - start);
-			std::this_thread::sleep_for(sleepfor);
-		}
-
+		end = clock.getElapsedTime();
+		clock.restart();
 	}
 
 	return 0;

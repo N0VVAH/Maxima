@@ -12,6 +12,7 @@ public:
 	virtual void* onClick() override;
 	virtual void setClick(void*) override;
 	virtual void setPos(float xPos, float yPos) override;
+	virtual void movePos(float xOffset, float yOffset) override;
 	sf::FloatRect getLocalBounds() override;
 	sf::FloatRect getGlobalBounds() override;
 	char type;
