@@ -16,6 +16,7 @@ void Charactor::CharSetup(const char* path)
 	chara->setSize({ 50, 50 });
 	chara->setTexture(&texture);
 	lastpos = sf::Vector2f{ 50, 50 };
+	type = 'c';
 }
 
 void Charactor::CharSetup(sf::Color colour)
@@ -24,6 +25,7 @@ void Charactor::CharSetup(sf::Color colour)
 	chara->setSize({ 50, 50 });
 	chara->setFillColor(colour);
 	lastpos = sf::Vector2f{ 50, 50 };
+	type = 'c';
 }
 
 void Charactor::CharSetup(sf::Color colour, float x, float y)
@@ -32,6 +34,7 @@ void Charactor::CharSetup(sf::Color colour, float x, float y)
 	chara->setSize({ x, y });
 	chara->setFillColor(colour);
 	lastpos = sf::Vector2f{ 50, 50 };
+	type = 'c';
 }
 
 void Charactor::draw(sf::RenderTarget& target, sf::RenderStates states) const

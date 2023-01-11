@@ -9,14 +9,17 @@ Tutorial::Tutorial(scene* preScene)
 	c.CharSetup(sf::Color::Green);
 	render.push_back(&c);
 	c.setPos(400, 400);
-
+	for (size_t i = 0; i < 10; i++)
+	{
+		enemies[i] = Square(sf::Color::Red);
+		enemies[i].setPos(std::rand() % 800, std::rand() % 800);
+		render.push_back(&enemies[i]);
+	}
 }
 
 void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
 	sf::Event* events = new sf::Event;
-
-	std::cout << dtime << "\n";
 
 	while (window->pollEvent(*events))
 	{
