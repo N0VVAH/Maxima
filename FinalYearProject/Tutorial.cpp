@@ -9,18 +9,29 @@ Tutorial::Tutorial(scene* preScene)
 	c.CharSetup(sf::Color::Green);
 	render.push_back(&c);
 	c.setPos(400, 400);
-	for (size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < 1; i++)
 	{
-		enemies[i] = Square(sf::Color::Red);
-		enemies[i].setPos(std::rand() % 800, std::rand() % 800);
-		render.push_back(&enemies[i]);
+		enemies[i] = new Square(sf::Color::Red);
+		enemies[i]->setPos(std::rand() % 800, std::rand() % 800);
+		enemies[i]->type = 'E';
+		render.push_back(enemies[i]);
 	}
 }
 
 void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
-	sf::Event* events = new sf::Event;
 
+	//Collision Detection
+	if (c.getGlobalBounds().intersects(enemies[0]->getGlobalBounds()))
+	{
+		std::cout << "HIT" << "\n";
+	}
+
+
+
+
+	//Event handling
+	sf::Event* events = new sf::Event;
 	while (window->pollEvent(*events))
 	{
 		switch ((*events).type)

@@ -18,5 +18,5 @@ public:
 
 protected:
 	Charactor c;
-	Square enemies[10] = {};
+	Square* enemies[10] = {};
 };
