@@ -4,6 +4,7 @@
 Square::Square(sf::Color colour, int xSize, int ySize)
 {
 	shape = sf::RectangleShape();
+	shape.setOrigin(xSize / 2, ySize / 2);
 	shape.setSize(sf::Vector2f{ xSize * 1.0f, ySize * 1.0f });
 	shape.setFillColor(colour);
 }
@@ -30,7 +31,23 @@ Square::Square(const char* path)
 	}
 	
 	shape.setTexture(&texture);
+}
 
+Square::Square(const char* path, int xSize, int ySize)
+{
+	shape = sf::RectangleShape();
+	shape.setSize({(float)xSize, (float)ySize});
+
+	try
+	{
+		texture.loadFromFile(path);
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << "Error loading Texture for Square Sprite " << e.what() << "\n";
+	}
+
+	shape.setTexture(&texture);
 }
 
 Square::Square(const char* path, sf::IntRect rect)

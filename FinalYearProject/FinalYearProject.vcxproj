@@ -154,6 +154,7 @@
     <ClCompile Include="buttonFuncs.cpp" />
     <ClCompile Include="buttonSprite.cpp" />
     <ClCompile Include="Charactor.cpp" />
+    <ClCompile Include="Combat.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="buttonfuncs.h" />
     <ClInclude Include="buttonSprite.h" />
     <ClInclude Include="Charactor.h" />
+    <ClInclude Include="combat.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="scene.h" />

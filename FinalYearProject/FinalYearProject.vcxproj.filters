@@ -60,6 +60,9 @@
     <ClCompile Include="Square.cpp">
       <Filter>Source Files\Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="Combat.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="square.h">
       <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="combat.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

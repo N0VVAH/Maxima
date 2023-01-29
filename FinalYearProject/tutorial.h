@@ -2,7 +2,6 @@
 #include "scene.h"
 #include "globals.h"
 #include "Charactor.h"
-#include "square.h"
 
 class Tutorial : public scene
 {
@@ -19,4 +18,9 @@ public:
 protected:
 	Charactor c;
 	Square* enemies[10] = {};
+	Square Teach;
+	Square teachCollision;
+
+private:
+	bool chatboxShowing = false;
 };

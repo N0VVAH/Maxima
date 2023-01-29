@@ -2,6 +2,7 @@
 #include "SFML/Window.hpp"
 #include "scene.h"
 #include <vector>
+#include "square.h"
 
 
 class Global
@@ -12,4 +13,6 @@ public:
 
 	static std::vector<scene*> toDelete;
 	static int framerate;
+
+	static Square* ChatBox;
 };

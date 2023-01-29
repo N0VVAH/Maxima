@@ -31,6 +31,7 @@ void Charactor::CharSetup(sf::Color colour)
 void Charactor::CharSetup(sf::Color colour, float x, float y)
 {
 	chara = new sf::RectangleShape();
+	chara->setOrigin(25, 25);
 	chara->setSize({ x, y });
 	chara->setFillColor(colour);
 	lastpos = sf::Vector2f{ 50, 50 };

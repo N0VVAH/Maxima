@@ -1,15 +1,24 @@
 #include "tutorial.h"
 #include "iostream"
+#include "combat.h"
 
 Tutorial::Tutorial() { }
 
 Tutorial::Tutorial(scene* preScene)
 {
 	prevScene = preScene;
-	c.CharSetup(sf::Color::Green);
+	c.CharSetup(sf::Color::Blue);
 	render.push_back(&c);
 	c.setPos(400, 400);
-	for (size_t i = 0; i < 1; i++)
+
+	Teach = Square(sf::Color::Green, 60, 60);
+	Teach.setPos(800, 400);
+	render.push_back(&Teach);
+
+	teachCollision = Square(sf::Color::White, 120, 120);
+	teachCollision.setPos(800, 400);
+
+	for (size_t i = 0; i < 10; i++)
 	{
 		enemies[i] = new Square(sf::Color::Red);
 		enemies[i]->setPos(std::rand() % 800, std::rand() % 800);
@@ -22,9 +31,39 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
 
 	//Collision Detection
-	if (c.getGlobalBounds().intersects(enemies[0]->getGlobalBounds()))
+	if (teachCollision.getGlobalBounds().intersects(c.getGlobalBounds()))
 	{
-		std::cout << "HIT" << "\n";
+
+		if (chatboxShowing == false)
+		{
+			chatboxShowing = true;
+			Global::ChatBox->setPos(400, 200);
+			render.push_back(Global::ChatBox);
+		}
+
+	}
+	else
+	{
+		if (chatboxShowing == true)
+		{
+			for (size_t i = 0; i < render.size(); i++)
+			{
+				if (render[i] == Global::ChatBox)
+				{
+					render.erase(render.begin() + i);
+					chatboxShowing = false;
+				}
+			}
+		}
+	}
+
+	for (size_t i = 0; i < sizeof(enemies) / sizeof(Square*); i++)
+	{
+		if (c.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
+		{
+			combat* combatScene = new combat(this);
+			loadScene(combatScene);
+		}
 	}
 
 
