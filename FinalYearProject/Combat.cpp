@@ -59,10 +59,6 @@ void combat::update(sf::RenderWindow* window, float dtime)
 		case sf::Event::KeyPressed:
 			switch ((*events).key.code)
 			{
-			case sf::Keyboard::Escape:
-				exitScene();
-				break;
-
 			default:
 				break;
 			}
