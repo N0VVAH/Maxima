@@ -3,6 +3,7 @@
 
 sf::Window* Global::window = nullptr;
 
+//Main Menu
 scene* clickStart()
 {
 	scene* w = new Tutorial(Global::curScene);
@@ -17,4 +18,25 @@ void clickSettings()
 void clickQuick()
 {
 	Global::window->close();
+}
+
+//Fight Menu
+char Fight()
+{
+	return 'F';
+}
+
+char Block()
+{
+	return 'b';
+}
+
+char Inv()
+{
+	return 'i';
+}
+
+char Flee()
+{
+	return 'f';
 }

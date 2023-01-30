@@ -21,5 +21,6 @@ private:
 	Square chara;
 	Square enemy;
 	Square background;
+	sprite* menu[10];
 
 };
