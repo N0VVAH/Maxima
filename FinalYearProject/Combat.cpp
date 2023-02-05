@@ -6,6 +6,15 @@
 combat::combat(scene* prev)
 {
 	prevScene = prev;
+	render.reserve(16);
+	moves.reserve(Global::Player->moves.size() * 2);
+
+	Global::Player->moves.push_back(new move());
+	Global::Player->moves.push_back(new move());
+	Global::Player->moves.push_back(new move());
+	Global::Player->moves.push_back(new move());
+	Global::Player->moves.push_back(new move());
+
 
 	//main none changing of battle UI
 
@@ -17,12 +26,20 @@ combat::combat(scene* prev)
 	chara.setPos(300, 200);
 	render.push_back(&chara);
 
-
 	enemy = Square(sf::Color::Red, 40, 100);
 	enemy.setPos(1300, 200);
 	render.push_back(&enemy);
 
 	//menu
+	rightMove = Square(sf::Color::Black, 50, 25);
+	rightMove.setPos(1325, 705);
+	//render.push_back(&rightMove);
+
+	leftMove = Square(sf::Color::Black, 50, 25);
+	leftMove.setPos(1255, 705);
+	//render.push_back(&leftMove);
+
+
 	menu[0] = new buttonSprite(200, 70, sf::Color::Black);
 	menu[0]->setPos(900, 500);
 	menu[0]->type = 'f';
@@ -96,26 +113,7 @@ void combat::update(sf::RenderWindow* window, float dtime)
 							{
 								char todo = ((char(*)())UI[i]->onClick())();
 								std::cout << todo << "\n";
-								switch (todo)
-								{
-								case 'F':
-
-									break;
-
-								case 'b':
-
-									break;
-
-								case 'i':
-
-									break;
-
-								case 'f':
-
-									break;
-								default:
-									break;
-								}
+								changeButtons(todo);
 							}
 							else
 							{
@@ -134,6 +132,70 @@ void combat::update(sf::RenderWindow* window, float dtime)
 		}
 	}
 }
+
+void combat::changeButtons(char butt)
+{
+	for (size_t i = 0; i < 10; i++)
+	{
+		if (menu[i] != nullptr)
+		{
+			removeFromUI(menu[i]);
+		}
+	}
+
+	int moveCount;
+
+	switch (butt)
+	{
+	case 'F':
+		moveCount = Global::Player->moves.size();
+		for (size_t i = 0; i < moveCount; i++)
+		{
+			if (i % 2 == 0)
+			{
+				moves.push_back(new Square(sf::Color::Black, 100, 35));
+				moves[i]->setPos(1100, 500 + ((i / 2) * 50));
+				render.push_back(moves[i]);
+			}
+			else
+			{
+				moves.push_back(new Square(sf::Color::Black, 100, 35));
+				moves[i]->setPos(1220, 500 + ((i / 2) * 50));
+				render.push_back(moves[i]);
+			}
+
+		}
+
+		return;
+
+	case 'b':
+
+		return;
+
+	case 'i':
+
+		return;
+
+	case 'f':
+
+		return;
+
+	case 'm':
+		for (size_t i = 0; i < sizeof(menu) / sizeof(sprite*); i++)
+		{
+			if (menu[i] != nullptr)
+			{
+
+				render.push_back(menu[i]);
+			}
+		}
+		break;
+
+	default:
+		break;
+	}
+}
+
 
 char combat::inputHandler()
 {

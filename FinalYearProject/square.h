@@ -18,6 +18,7 @@ public:
 	void changeMapping(sf::IntRect);
 	inline sf::FloatRect getLocalBounds() override { return shape.getLocalBounds(); }
 	inline sf::FloatRect getGlobalBounds() override { return shape.getGlobalBounds(); }
+	virtual inline void setFillColour(sf::Color colour) override { shape.setFillColor(colour); }
 
 private:
 	sf::RectangleShape shape;

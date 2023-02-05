@@ -1,4 +1,5 @@
 #include "buttonfuncs.h"
+#include "tutorial.h"
 #include <iostream>
 
 sf::Window* Global::window = nullptr;

@@ -157,6 +157,7 @@
     <ClCompile Include="Combat.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Tutorial.cpp" />
@@ -168,6 +169,8 @@
     <ClInclude Include="combat.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="mainmenu.h" />
+    <ClInclude Include="moves.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="square.h" />

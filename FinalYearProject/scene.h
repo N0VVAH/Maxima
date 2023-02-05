@@ -1,5 +1,5 @@
 #pragma once
-#include "sprite.h"
+#include "square.h"
 
 
 class scene
@@ -12,6 +12,33 @@ public:
 	virtual void exitScene() = 0;
 	virtual void closeScene() = 0;
 	virtual void loadScene(scene*) = 0;
+	bool removeFromRender(sprite* toRemove)
+	{
+		for (size_t i = 0; i < render.size(); i++)
+		{
+			if (render[i] == toRemove)
+			{
+				render.erase(render.begin() + i);
+				return true;
+			}
+		}
+
+		return false;
+	};
+
+	bool removeFromUI(sprite* toRemove)
+	{
+		for (size_t i = 0; i < UI.size(); i++)
+		{
+			if (UI[i] == toRemove)
+			{
+				UI.erase(UI.begin() + i);
+				return true;
+			}
+		}
+
+		return false;
+	};
 
 protected:
 	std::vector<sprite*> render;

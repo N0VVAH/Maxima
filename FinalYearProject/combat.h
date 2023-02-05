@@ -18,9 +18,20 @@ protected:
 
 
 private:
+	//variables
 	Square chara;
 	Square enemy;
+
 	Square background;
+	Square chatBox;
+
+	Square rightMove;
+	Square leftMove;
 	sprite* menu[10];
+	std::vector<sprite*> moves;
+
+
+	//functions
+	void changeButtons(char butt);
 
 };

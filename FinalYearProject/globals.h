@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Window.hpp"
 #include "scene.h"
-#include <vector>
+#include "player.h"
 #include "square.h"
 
 
@@ -15,4 +15,6 @@ public:
 	static int framerate;
 
 	static Square* ChatBox;
+
+	static player* Player;
 };

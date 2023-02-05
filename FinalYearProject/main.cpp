@@ -1,4 +1,4 @@
-#include "mainmenu.h"
+#include "combat.h"
 #include <chrono>
 #include <thread>
 #include "globals.h"
@@ -7,7 +7,7 @@
 scene* Global::curScene = nullptr;
 int Global::framerate = 144;
 Square* Global::ChatBox = new Square("D:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\ChatBox.png", 400, 120);
-
+player* Global::Player = new player();
 
 int main()
 {
@@ -18,7 +18,7 @@ int main()
 
 	window.setVerticalSyncEnabled(true);
 
-	Global::curScene = new MainMenu();
+	Global::curScene = new combat(nullptr);
 
 
 	sf::Clock clock;

@@ -1,6 +1,5 @@
 #pragma once
 #include "globals.h"
-#include "tutorial.h"
 
 //Main Menu
 scene* clickStart();
