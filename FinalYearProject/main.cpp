@@ -1,4 +1,4 @@
-#include "combat.h"
+#include "mainmenu.h"
 #include <chrono>
 #include <thread>
 #include "globals.h"
@@ -18,7 +18,7 @@ int main()
 
 	window.setVerticalSyncEnabled(true);
 
-	Global::curScene = new combat(nullptr);
+	Global::curScene = new MainMenu();
 
 
 	sf::Clock clock;
