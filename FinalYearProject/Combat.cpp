@@ -76,6 +76,34 @@ void combat::update(sf::RenderWindow* window, float dtime)
 		case sf::Event::KeyPressed:
 			switch ((*events).key.code)
 			{
+			case sf::Keyboard::Escape:
+				switch (curDisplayed)
+				{
+				case 'F':
+					for (size_t i = 0; i < moves.size(); i++)
+					{
+						removeFromUI(moves[i]);
+					}
+					removeFromUI(&rightMove);
+					removeFromUI(&leftMove);
+					for (size_t i = 0; i < 10; i++)
+					{
+						if (menu[i] != nullptr)
+						{
+							UI.push_back(menu[i]);
+						}
+						
+					}
+					curDisplayed = 'n';
+					break;
+
+				case 'n':
+					break;
+
+				default:
+					break;
+				}
+
 			default:
 				break;
 			}
@@ -148,6 +176,7 @@ void combat::changeButtons(char butt)
 	switch (butt)
 	{
 	case 'F':
+		curDisplayed = 'F';
 		moveCount = Global::Player->moves.size();
 		start = 0;
 		if (moveCount > 10) { moveCount = 10; }

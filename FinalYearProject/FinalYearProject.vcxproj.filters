@@ -110,6 +110,9 @@
     <ClInclude Include="moves.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="text.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="useful.txt">
