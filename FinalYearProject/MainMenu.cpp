@@ -7,15 +7,37 @@
 MainMenu::MainMenu()
 {
 	UI.push_back(new buttonSprite(300, 100, sf::Color::White));
-	UI[0]->setPos(650, 200);
+	UI[0]->setPos(800, 200);
 	UI[0]->setClick(&clickStart);
 	UI[0]->type = 'S';
 
 	UI.push_back(new buttonSprite(300, 100, sf::Color::White));
-	UI[1]->setPos(650, 600);
+	UI[1]->setPos(800, 600);
 	UI[1]->setClick(&clickQuick);
 
+	textProps p;
+	p.col = sf::Color::White;
+	p.string = "Maxima";
+	p.fontSize = 50;
 
+	Text* Title = new Text(p);
+	Title->setPos(800, 50);
+
+	p.col = sf::Color::Black;
+	p.string = "Start";
+	p.fontSize = 30;
+
+	Text* Start = new Text(p);
+	Start->setPos(800, 190);
+
+	p.string = "Quit";
+
+	Text* Quit = new Text(p);
+	Quit->setPos(800, 590);
+
+	UI.push_back(Start);
+	UI.push_back(Quit);
+	render.push_back(Title);
 
 
 

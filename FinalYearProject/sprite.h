@@ -13,6 +13,7 @@ public:
 	virtual void movePos(float xOffset, float yOffset) = 0;
 	inline virtual sf::FloatRect getLocalBounds() { return sf::FloatRect(); }
 	inline virtual sf::FloatRect getGlobalBounds() { return sf::FloatRect(); }
+	inline virtual void changeText(const char* text) {}
 	virtual void setFillColour(sf::Color colour) {};
 	char type;
 

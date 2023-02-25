@@ -160,6 +160,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Square.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +168,7 @@
     <ClInclude Include="buttonSprite.h" />
     <ClInclude Include="Charactor.h" />
     <ClInclude Include="combat.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="moves.h" />

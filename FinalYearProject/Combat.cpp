@@ -2,6 +2,8 @@
 #include "buttonSprite.h"
 #include "buttonfuncs.h"
 #include <iostream>
+#include <string>
+
 
 combat::combat(scene* prev)
 {
@@ -15,9 +17,7 @@ combat::combat(scene* prev)
 	Global::Player->moves.push_back(new move());
 	Global::Player->moves.push_back(new move());
 
-
 	//main none changing of battle UI
-
 	background = Square(sf::Color::Magenta, 1600, 800);
 	background.setPos(800, 400);
 	render.push_back(&background);
@@ -26,43 +26,95 @@ combat::combat(scene* prev)
 	chara.setPos(300, 200);
 	render.push_back(&chara);
 
+	textProps p;
+	p.col = sf::Color::Black;
+	p.fontSize = 30;
+	p.string = Global::Player->name;
+
+	Text* name = new Text(p);
+	name->setPos(300, 120);
+	render.push_back(name);
+
 	enemy = Square(sf::Color::Red, 40, 100);
 	enemy.setPos(1300, 200);
 	render.push_back(&enemy);
 
+	p.string = e.name;
+	Text* Ename = new Text(p);
+	Ename->setPos(1300, 120);
+	render.push_back(Ename);
+
+	//Combat History / Chat box
+	Square* temp = new Square(sf::Color::Black, 400, 300);
+	temp->setPos(200, 650);
+	render.push_back(temp);
+
+
+
+	p.col = sf::Color::White;
+	p.fontSize = 24;
+	p.string = "History";
+
+	Text* HistoryTitle = new Text(p);
+	HistoryTitle->setPos(200, 520);
+	UI.push_back(HistoryTitle);
+
+
+	//Stats
+	std::string toSet;
+	toSet.append("Health   : ");
+	toSet.append(std::to_string(Global::Player->health));
+	toSet.append("\nStamina : ");
+	toSet.append(std::to_string(Global::Player->stamina));
+	p.string = toSet.c_str();;
+
+	PlayerStats = new Text(p);
+	PlayerStats->setPos(300, 280);
+
+	toSet.clear();
+	toSet.append("Health   : ");
+	toSet.append(std::to_string(e.health));
+	toSet.append("\nStamina : ");
+	toSet.append(std::to_string(e.stamina));
+	p.string = toSet.c_str();
+
+	EnemyStats = new Text(p);
+	EnemyStats->setPos(1300, 280);
+
+	UI.push_back(PlayerStats);
+	UI.push_back(EnemyStats);
+
 	//menu
 	rightMove = Square(sf::Color::Black, 50, 25);
-	rightMove.setPos(1245, 705);
-	//render.push_back(&rightMove);
-
+	rightMove.setPos(1445, 705);
+	
 	leftMove = Square(sf::Color::Black, 50, 25);
-	leftMove.setPos(1175, 705);
-	//render.push_back(&leftMove);
-
-
+	leftMove.setPos(1375, 705);
+	
 	menu[0] = new buttonSprite(200, 70, sf::Color::Black);
-	menu[0]->setPos(900, 500);
+	menu[0]->setPos(1100, 500);
 	menu[0]->type = 'f';
 	menu[0]->setClick(&Fight);
 	UI.push_back(menu[0]);
 
 	menu[1] = new buttonSprite(200, 70, sf::Color::Black);
-	menu[1]->setPos(1150, 500);
+	menu[1]->setPos(1350, 500);
 	menu[1]->type = 'f';
 	menu[1]->setClick(&Block);
 	UI.push_back(menu[1]);
 
 	menu[2] = new buttonSprite(200, 70, sf::Color::Black);
-	menu[2]->setPos(900, 610);
+	menu[2]->setPos(1100, 610);
 	menu[2]->type = 'f';
 	menu[2]->setClick(&Inv);
 	UI.push_back(menu[2]);
 
 	menu[3] = new buttonSprite(200, 70, sf::Color::Black);
-	menu[3]->setPos(1150, 610);
+	menu[3]->setPos(1350, 610);
 	menu[3]->type = 'f';
 	menu[3]->setClick(&Flee);
 	UI.push_back(menu[3]);
+
 }
 
 void combat::update(sf::RenderWindow* window, float dtime)
@@ -186,13 +238,13 @@ void combat::changeButtons(char butt)
 			if (i % 2 == 0)
 			{
 				moves.push_back(new Square(sf::Color::Black, 100, 35));
-				moves[i]->setPos(1100, 500 + ((i / 2) * 50));
+				moves[i]->setPos(1300, 500 + ((i / 2) * 50));
 				UI.push_back(moves[i]);
 			}
 			else
 			{
 				moves.push_back(new Square(sf::Color::Black, 100, 35));
-				moves[i]->setPos(1220, 500 + ((i / 2) * 50));
+				moves[i]->setPos(1420, 500 + ((i / 2) * 50));
 				UI.push_back(moves[i]);
 			}
 			UI.push_back(&leftMove);

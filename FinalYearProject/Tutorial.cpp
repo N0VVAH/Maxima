@@ -77,23 +77,28 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		{
 
 		case sf::Event::KeyPressed:
+
+			if ((*events).key.code == sf::Keyboard::W)
+			{
+				c.movePos(0, -500 * dtime);
+			}
+			if ((*events).key.code == sf::Keyboard::S)
+			{
+				c.movePos(0, 500 * dtime);
+			}
+			if ((*events).key.code == sf::Keyboard::A)
+			{
+				c.movePos(-500 * dtime, 0);
+			}
+			if ((*events).key.code == sf::Keyboard::D)
+			{
+				c.movePos(500 * dtime, 0);
+			}
+
 			switch ((*events).key.code)
 			{
 			case sf::Keyboard::Escape:
 				exitScene();
-				break;
-
-			case sf::Keyboard::W:
-				c.movePos(0, -500 * dtime);
-				break;
-			case sf::Keyboard::S:
-				c.movePos(0, 500 * dtime);
-				break;
-			case sf::Keyboard::A:
-				c.movePos(-500 * dtime, 0);
-				break;
-			case sf::Keyboard::D:
-				c.movePos(500 * dtime, 0);
 				break;
 
 			default:

@@ -1,6 +1,8 @@
 #pragma once
 #include "scene.h"
 #include "globals.h"
+#include "text.h"
+#include "enemy.h"
 
 class combat : public scene
 {
@@ -19,6 +21,11 @@ protected:
 
 private:
 	//variables
+	Enemy e;
+
+	Text* PlayerStats;
+	Text* EnemyStats;
+
 	Square chara;
 	Square enemy;
 
@@ -31,7 +38,6 @@ private:
 	std::vector<sprite*> moves;
 
 	char curDisplayed = 'n';
-
 
 	//functions
 	void changeButtons(char butt);

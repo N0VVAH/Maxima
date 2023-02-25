@@ -9,6 +9,7 @@ buttonSprite::buttonSprite()
 buttonSprite::buttonSprite(float width, float height, sf::Color colour)
 {
 	shape = new sf::RectangleShape(sf::Vector2f(width, height));
+	shape->setOrigin(width / 2, height /2);
 	shape->setFillColor(colour);
 }
 
