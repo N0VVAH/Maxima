@@ -30,6 +30,8 @@ private:
 	sprite* menu[10];
 	std::vector<sprite*> moves;
 
+	char curDisplayed = 'n';
+
 
 	//functions
 	void changeButtons(char butt);
