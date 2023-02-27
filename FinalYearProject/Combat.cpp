@@ -123,6 +123,7 @@ void combat::update(sf::RenderWindow* window, float dtime)
 	sf::Event* events = new sf::Event;
 	while (window->pollEvent(*events))
 	{
+
 		switch ((*events).type)
 		{
 
@@ -196,9 +197,18 @@ void combat::update(sf::RenderWindow* window, float dtime)
 								std::cout << todo << "\n";
 								changeButtons(todo);
 							}
-							else
+							else if (UI[i]->type == 'M')
+							{
+								move* clickedMove = MoveController::getMove((uint32_t)UI[i]->getData());
+								std::cout << clickedMove->name << "\n";
+							}
+							else if ('n')
 							{
 								((void(*)())UI[i]->onClick())();
+							}
+							else
+							{
+
 							}
 
 						}
@@ -241,18 +251,18 @@ void combat::changeButtons(char butt)
 
 		for (size_t i = start; i < moveCount; i++)
 		{
+			moves.push_back(new Square(sf::Color::Black, 100, 35));
 			if (i % 2 == 0)
 			{
-				moves.push_back(new Square(sf::Color::Black, 100, 35));
 				moves[i]->setPos(1300, 500 + ((i / 2) * 50));
-				UI.push_back(moves[i]);
 			}
 			else
 			{
-				moves.push_back(new Square(sf::Color::Black, 100, 35));
 				moves[i]->setPos(1420, 500 + ((i / 2) * 50));
-				UI.push_back(moves[i]);
 			}
+			moves[i]->setData((void*)Global::Player->moves[i]->id);
+			moves[i]->type = 'M';
+			UI.push_back(moves[i]);
 		}
 		UI.push_back(&leftMove);
 		UI.push_back(&rightMove);
@@ -301,6 +311,11 @@ void combat::changeButtons(char butt)
 	default:
 		break;
 	}
+}
+
+void combat::moveSelected(move* playerMove)
+{
+
 }
 
 

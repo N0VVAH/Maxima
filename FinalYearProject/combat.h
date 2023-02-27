@@ -42,4 +42,6 @@ private:
 	//functions
 	void changeButtons(char butt);
 
+	void moveSelected(move* playerMove);
+
 };

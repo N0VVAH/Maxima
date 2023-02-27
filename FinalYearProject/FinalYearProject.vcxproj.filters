@@ -75,6 +75,9 @@
     <ClCompile Include="Text.cpp">
       <Filter>Source Files\Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="moves.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene.h">

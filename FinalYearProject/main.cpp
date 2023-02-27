@@ -4,6 +4,8 @@
 #include "globals.h"
 #include "iostream"
 
+void startUp();
+
 scene* Global::curScene = nullptr;
 int Global::framerate = 144;
 Square* Global::ChatBox = new Square("D:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\ChatBox.png", 400, 120);
@@ -11,7 +13,9 @@ player* Global::Player = new player();
 
 int main()
 {
-	
+	startUp();
+
+
 	sf::RenderWindow window(sf::VideoMode(1600, 800), "Maxima");
 
 	Global::window = &window;
@@ -50,4 +54,10 @@ int main()
 	}
 
 	return 0;
+}
+
+
+void startUp()
+{
+	MoveController::MoveController();
 }
