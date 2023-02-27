@@ -88,9 +88,11 @@ combat::combat(scene* prev)
 	//menu
 	rightMove = Square(sf::Color::Black, 50, 25);
 	rightMove.setPos(1445, 705);
+	rightMove.type = ' ';
 	
 	leftMove = Square(sf::Color::Black, 50, 25);
 	leftMove.setPos(1375, 705);
+	leftMove.type = ' ';
 	
 	menu[0] = new buttonSprite(200, 70, sf::Color::Black);
 	menu[0]->setPos(1100, 500);
@@ -202,13 +204,13 @@ void combat::update(sf::RenderWindow* window, float dtime)
 								move* clickedMove = MoveController::getMove((uint32_t)UI[i]->getData());
 								std::cout << clickedMove->name << "\n";
 							}
-							else if ('n')
+							else if (UI[i]->type == 'n')
 							{
 								((void(*)())UI[i]->onClick())();
 							}
-							else
+							else if (UI[i]->type == ' ')
 							{
-
+								std::cout << "Nothing\n";
 							}
 
 						}
