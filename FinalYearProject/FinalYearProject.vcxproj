@@ -178,6 +178,7 @@
     <ClInclude Include="sprite.h" />
     <ClInclude Include="square.h" />
     <ClInclude Include="text.h" />
+    <ClInclude Include="Transitions.h" />
     <ClInclude Include="tutorial.h" />
   </ItemGroup>
   <ItemGroup>

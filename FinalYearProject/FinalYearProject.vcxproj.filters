@@ -40,6 +40,9 @@
     <Filter Include="Source Files\Entity">
       <UniqueIdentifier>{1c254724-d3d4-4337-9a98-2a51dd3548fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Animations">
+      <UniqueIdentifier>{d239d024-5d9d-4dae-8ceb-4dd7d80e73c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="enemy.h">
       <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Transitions.h">
+      <Filter>Header Files\Animations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
