@@ -9,6 +9,7 @@ combat::combat(scene* prev)
 {
 	prevScene = prev;
 	render.reserve(16);
+	UI.reserve(32);
 	moves.reserve(Global::Player->moves.size() * 2);
 
 	Global::Player->moves.push_back(new move());
@@ -228,10 +229,15 @@ void combat::changeButtons(char butt)
 	switch (butt)
 	{
 	case 'F':
+		if (curDisplayed == 'F')
+		{
+			return;
+		}
 		curDisplayed = 'F';
 		moveCount = Global::Player->moves.size();
 		start = 0;
 		if (moveCount > 10) { moveCount = 10; }
+		moves.clear();
 
 		for (size_t i = start; i < moveCount; i++)
 		{
@@ -247,25 +253,24 @@ void combat::changeButtons(char butt)
 				moves[i]->setPos(1420, 500 + ((i / 2) * 50));
 				UI.push_back(moves[i]);
 			}
-			UI.push_back(&leftMove);
-			UI.push_back(&rightMove);
-			if (moveCount == 10 && (start + 10) < Global::Player->moves.size())
-			{
-				rightMove.setFillColour(sf::Color::Black);
-			}
-			else
-			{
-				rightMove.setFillColour(sf::Color::White);
-			}
-			if (start != 0)
-			{
-				leftMove.setFillColour(sf::Color::Black);
-			}
-			else
-			{
-				leftMove.setFillColour(sf::Color::White);
-			}
-
+		}
+		UI.push_back(&leftMove);
+		UI.push_back(&rightMove);
+		if (moveCount == 10 && (start + 10) < Global::Player->moves.size())
+		{
+			rightMove.setFillColour(sf::Color::Black);
+		}
+		else
+		{
+			rightMove.setFillColour(sf::Color::White);
+		}
+		if (start != 0)
+		{
+			leftMove.setFillColour(sf::Color::Black);
+		}
+		else
+		{
+			leftMove.setFillColour(sf::Color::White);
 		}
 
 		return;
