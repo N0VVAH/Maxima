@@ -43,6 +43,9 @@
     <Filter Include="Header Files\Animations">
       <UniqueIdentifier>{d239d024-5d9d-4dae-8ceb-4dd7d80e73c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Animations">
+      <UniqueIdentifier>{b9b420e5-9d86-4e14-be95-75737e029fc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="moves.cpp">
       <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Transitions.cpp">
+      <Filter>Source Files\Animations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

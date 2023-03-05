@@ -18,6 +18,7 @@ public:
 	inline virtual sf::FloatRect getGlobalBounds() { return sf::FloatRect(); }
 	inline virtual void changeText(const char* text) {}
 	virtual void setFillColour(sf::Color colour) {};
+	inline virtual sf::Vector2f getPos() { return sf::Vector2f(0.0f, 0.0f); }
 	char type;
 
 protected:

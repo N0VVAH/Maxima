@@ -3,6 +3,7 @@
 #include <thread>
 #include "globals.h"
 #include "iostream"
+#include "Transitions.h"
 
 void startUp();
 
@@ -59,5 +60,7 @@ int main()
 
 void startUp()
 {
+	TransitionController::start();
+
 	MoveController::MoveController();
 }

@@ -1,6 +1,7 @@
 #include "tutorial.h"
 #include "iostream"
 #include "combat.h"
+#include "Transitions.h"
 
 Tutorial::Tutorial() { }
 
@@ -29,6 +30,12 @@ Tutorial::Tutorial(scene* preScene)
 
 void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
+
+	if (TransitionController::playing != nullptr && TransitionController::playing->isDone() == false)
+	{
+		TransitionController::playing->update(dtime);
+		return;
+	}
 
 	//Collision Detection
 	if (teachCollision.getGlobalBounds().intersects(c.getGlobalBounds()))
@@ -61,6 +68,16 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	{
 		if (c.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
 		{
+			if (TransitionController::playing == nullptr)
+			{
+				TransitionController::playTransition(0);
+				return;
+			}
+
+			TransitionController::playing->reset();
+			TransitionController::playing == nullptr;
+
+
 			combat* combatScene = new combat(this);
 			loadScene(combatScene);
 		}
@@ -151,6 +168,25 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		default:
 			break;
 		}
+	}
+}
+
+void Tutorial::draw(sf::RenderTarget& target, sf::RenderStates states)
+{
+	for (size_t i = 0; i < render.size(); i++)
+	{
+		render[i]->draw(target, states);
+	}
+
+	for (size_t i = 0; i < UI.size(); i++)
+	{
+		UI[i]->draw(target, states);
+	}
+
+	if (TransitionController::playing != nullptr && TransitionController::playing->isDone() == false)
+	{
+		TransitionController::playing->draw(target, states);
+		return;
 	}
 }
 

@@ -9,7 +9,7 @@ public:
 	Tutorial();
 	Tutorial(scene*);
 	void update(sf::RenderWindow* window, float dtime) override;
-	//void draw(sf::RenderTarget& target, sf::RenderStates states);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 	char inputHandler() override;
 	void exitScene() override;
 	void closeScene() override;

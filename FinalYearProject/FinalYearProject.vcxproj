@@ -162,6 +162,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Transitions.cpp" />
     <ClCompile Include="Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>

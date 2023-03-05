@@ -203,6 +203,7 @@ void combat::update(sf::RenderWindow* window, float dtime)
 							{
 								move* clickedMove = MoveController::getMove((uint32_t)UI[i]->getData());
 								std::cout << clickedMove->name << "\n";
+								moveSelected(clickedMove);
 							}
 							else if (UI[i]->type == 'n')
 							{
@@ -304,7 +305,6 @@ void combat::changeButtons(char butt)
 		{
 			if (menu[i] != nullptr)
 			{
-
 				render.push_back(menu[i]);
 			}
 		}
