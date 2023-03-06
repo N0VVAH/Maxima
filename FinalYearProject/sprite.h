@@ -2,12 +2,22 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 
+struct textureAtlasProps
+{
+	float timeSinceLastTexture = 0.0f;
+	float timeBetween = 0.6f;
+	uint32_t texturesInAtlas = 2;
+	sf::Vector2f uvSize = sf::Vector2f(16.0f, 16.0f);
+};
+
 
 class sprite : public sf::Drawable
 {
 public:
 	sprite() { } //default
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+	virtual void update(float timestep) {};
+	virtual void updateTexture() {};
 	virtual void* onClick() = 0;
 	virtual void setClick(void*) = 0;
 	inline virtual void setData(void* d) { data = d; }
@@ -21,8 +31,27 @@ public:
 	inline virtual sf::Vector2f getPos() { return sf::Vector2f(0.0f, 0.0f); }
 	char type;
 
+	inline void setTextureAtlas(textureAtlasProps p) 
+	{
+		textureAtlas = true;
+		timeSinceLastTexture = p.timeSinceLastTexture;
+		timeBetween = p.timeBetween;
+		texturesInAtlas = p.texturesInAtlas;
+		uvSize = p.uvSize;
+	}
+	inline bool getTextureAtlas() { return textureAtlas; }
+	inline void setAtlasTileSize(sf::Vector2f size) { uvSize = size; }
+
 protected:
 	void* data;
-	sf::Texture texture;
 	void (*Click)(void);
+
+	sf::Texture texture;
+	bool textureAtlas = false;
+	float timeSinceLastTexture;
+	float timeBetween;
+	uint32_t texturesInAtlas;
+	uint32_t curAtlasTexture = 0;
+	sf::Vector2f uvStart;
+	sf::Vector2f uvSize;
 };

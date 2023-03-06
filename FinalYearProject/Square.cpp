@@ -21,6 +21,7 @@ Square::Square(const char* path)
 {
 	shape = sf::RectangleShape();
 	shape.setSize({ 10, 10 });
+	uvStart = sf::Vector2f(0.0f, 0.0f);
 
 	try
 	{
@@ -38,6 +39,7 @@ Square::Square(const char* path, int xSize, int ySize)
 {
 	shape = sf::RectangleShape();
 	shape.setSize({(float)xSize, (float)ySize});
+	uvStart = sf::Vector2f(0.0f, 0.0f);
 
 	try
 	{
@@ -73,6 +75,15 @@ Square::Square(const char* path, sf::IntRect rect)
 void Square::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(shape, states);
+}
+
+void Square::update(float timestep)
+{
+	if (textureAtlas == true)
+	{
+		uvStart.x += uvSize.x;
+		shape.setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
+	}
 }
 
 void* Square::onClick()

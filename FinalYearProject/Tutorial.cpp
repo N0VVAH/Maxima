@@ -8,7 +8,9 @@ Tutorial::Tutorial() { }
 Tutorial::Tutorial(scene* preScene)
 {
 	prevScene = preScene;
-	c.CharSetup(sf::Color::Blue);
+	c.CharSetup("..\\assets\\images\\testatlas.png", 50, 50);
+	c.setTextureAtlas(textureAtlasProps());
+	c.updateTexture();
 	render.push_back(&c);
 	c.setPos(400, 400);
 
@@ -30,6 +32,11 @@ Tutorial::Tutorial(scene* preScene)
 
 void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
+	//sprite updates
+	c.update(dtime);
+
+
+
 
 	if (TransitionController::playing != nullptr && TransitionController::playing->isDone() == false)
 	{

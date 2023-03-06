@@ -1,7 +1,7 @@
 #include "Charactor.h"
 #include "iostream"
 
-void Charactor::CharSetup(const char* path)
+void Charactor::CharSetup(const char* path, int xSize, int ySize)
 {
 	chara = new sf::RectangleShape();
 	try
@@ -13,7 +13,7 @@ void Charactor::CharSetup(const char* path)
 		std::cerr << e.what();
 	}
 
-	chara->setSize({ 50, 50 });
+	chara->setSize({ (float)xSize, (float)ySize });
 	chara->setTexture(&texture);
 	lastpos = sf::Vector2f{ 50, 50 };
 	type = 'c';
@@ -41,6 +41,38 @@ void Charactor::CharSetup(sf::Color colour, float x, float y)
 void Charactor::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(*chara, states);
+}
+
+void Charactor::update(float timestep)
+{
+	if (textureAtlas == true)
+	{
+		timeSinceLastTexture += timestep;
+
+		if (timeBetween <= timeSinceLastTexture)
+		{
+			if (curAtlasTexture + 1 == texturesInAtlas)
+			{
+				curAtlasTexture = 0;
+				uvStart = sf::Vector2f(0.0f, 0.0f);
+			}
+			else
+			{
+				curAtlasTexture++;
+				uvStart.x += uvSize.x;
+			}
+
+			timeSinceLastTexture = 0.0f;
+
+			chara->setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
+
+		}
+	}
+}
+
+void Charactor::updateTexture()
+{
+	chara->setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
 }
 
 void* Charactor::onClick()

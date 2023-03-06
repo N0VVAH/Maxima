@@ -5,10 +5,12 @@ class Charactor : public sprite
 {
 public:
 	Charactor() {}
-	void CharSetup(const char* path);
+	void CharSetup(const char* path, int xSize, int ySize);
 	void CharSetup(sf::Color colour);
 	void CharSetup(sf::Color colour, float x, float y);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	virtual void update(float timestep) override;
+	virtual void updateTexture() override;
 	virtual void* onClick() override;
 	virtual void setClick(void*) override;
 	virtual void setPos(float xPos, float yPos) override;

@@ -11,6 +11,7 @@ public:
 	Square(const char* path, int xSize, int ySize);
 	Square(const char* path, sf::IntRect);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void update(float timestep) override;
 	virtual void* onClick();
 	virtual void setClick(void*);
 	virtual void setPos(float xPos, float yPos);
@@ -20,6 +21,7 @@ public:
 	inline sf::FloatRect getGlobalBounds() override { return shape.getGlobalBounds(); }
 	virtual inline void setFillColour(sf::Color colour) override { shape.setFillColor(colour); }
 	inline virtual sf::Vector2f getPos() override { return shape.getPosition(); }
+
 
 private:
 	sf::RectangleShape shape;
