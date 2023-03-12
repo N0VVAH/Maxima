@@ -35,10 +35,10 @@ public:
 	}
 	virtual void update(float timeStep) override
 	{
-		barOne->movePos(600 * timeStep, 0);
-		barTwo->movePos(-600 * timeStep, 0);
-		barThree->movePos(600 * timeStep, 0);
-		barFour->movePos(-600 * timeStep, 0);
+		barOne->movePos(700 * timeStep, 0);
+		barTwo->movePos(-700 * timeStep, 0);
+		barThree->movePos(700 * timeStep, 0);
+		barFour->movePos(-700 * timeStep, 0);
 		if (barOne->getPos().x >= 799)
 		{
 			done = true;

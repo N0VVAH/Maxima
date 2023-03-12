@@ -11,8 +11,23 @@ public:
 		id = 0;
 		name = "test";
 	}
+	move(uint32_t i, const char* n, uint32_t ai, uint32_t p, uint32_t a, const char* t)
+	{
+		id = i;
+		name = n;
+		animationID = ai;
+		power = p;
+		accuracy = a;
+		type = t;
+	}
+
 	uint32_t id;
 	const char* name;
+	uint32_t animationID;
+
+	uint32_t power;
+	uint32_t accuracy;
+	const char* type;
 };
 
 class MoveController

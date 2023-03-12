@@ -10,13 +10,14 @@ combat::combat(scene* prev)
 	prevScene = prev;
 	render.reserve(16);
 	UI.reserve(32);
-	moves.reserve(Global::Player->moves.size() * 2);
+	moves.reserve(100);
+	//(Global::Player->moves.size() * 2);
 
-	Global::Player->moves.push_back(new move());
-	Global::Player->moves.push_back(new move());
-	Global::Player->moves.push_back(new move());
-	Global::Player->moves.push_back(new move());
-	Global::Player->moves.push_back(new move());
+	Global::Player->moves.push_back(MoveController::getMove(10));
+	Global::Player->moves.push_back(MoveController::getMove(10));
+	Global::Player->moves.push_back(MoveController::getMove(10));
+	Global::Player->moves.push_back(MoveController::getMove(10));
+	Global::Player->moves.push_back(MoveController::getMove(10));
 
 	//main none changing of battle UI
 	background = Square(sf::Color::Magenta, 1600, 800);
@@ -269,6 +270,26 @@ void combat::changeButtons(char butt)
 		}
 		UI.push_back(&leftMove);
 		UI.push_back(&rightMove);
+
+
+
+		for (size_t i = start; i < moveCount; i++)
+		{
+			textProps* p = new textProps();
+			p->col = sf::Color::White;
+			p->fontSize = 20;
+
+			p->string = MoveController::getMove((uint32_t)moves[i]->getData())->name;
+			moves.push_back(new Text(*p));
+			moves[i + moveCount]->setPos(moves[i]->getPos().x, moves[i]->getPos().y - 5);
+
+			UI.push_back(moves[i + moveCount]);
+
+			delete p;
+		}
+
+		
+
 		if (moveCount == 10 && (start + 10) < Global::Player->moves.size())
 		{
 			rightMove.setFillColour(sf::Color::Black);
