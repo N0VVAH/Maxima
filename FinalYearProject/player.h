@@ -12,4 +12,7 @@ public:
 	int stamina = 10;
 	int maxhealth = 10;
 	int maxstamina = 10;
+
+	//strength, Dexterity, Constitution, intelligence, wisdom, charisma
+	int stats[6] = { 1, 1, 1, 1, 1, 1 };
 };

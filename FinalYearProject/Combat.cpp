@@ -3,6 +3,7 @@
 #include "buttonfuncs.h"
 #include <iostream>
 #include <string>
+#include <chrono>
 
 
 combat::combat(scene* prev)
@@ -18,6 +19,8 @@ combat::combat(scene* prev)
 	Global::Player->moves.push_back(MoveController::getMove(10));
 	Global::Player->moves.push_back(MoveController::getMove(10));
 	Global::Player->moves.push_back(MoveController::getMove(10));
+
+	e.moves.push_back(MoveController::getMove(10));
 
 	//main none changing of battle UI
 	background = Square(sf::Color::Magenta, 1600, 800);
@@ -226,6 +229,22 @@ void combat::update(sf::RenderWindow* window, float dtime)
 			break;
 		}
 	}
+
+
+	//UI Updating
+	std::string toSet;
+	toSet.append("Health   : ");
+	toSet.append(std::to_string(Global::Player->health));
+	toSet.append("\nStamina : ");
+	toSet.append(std::to_string(Global::Player->stamina));
+	PlayerStats->changeText(toSet.c_str());
+
+	toSet.clear();
+	toSet.append("Health   : ");
+	toSet.append(std::to_string(e.health));
+	toSet.append("\nStamina : ");
+	toSet.append(std::to_string(e.stamina));
+	EnemyStats->changeText(toSet.c_str());
 }
 
 void combat::changeButtons(char butt)
@@ -338,6 +357,83 @@ void combat::changeButtons(char butt)
 
 void combat::moveSelected(move* playerMove)
 {
+	bool pHit = false;
+	uint32_t pDamage = 0;
+
+	bool eHit = false;
+	uint32_t eDamage = 0;
+
+	srand((uint32_t)std::chrono::high_resolution_clock::now);
+
+	uint32_t rando = rand() % 101;
+
+	if (rando < Global::Player->stats[1] + playerMove->accuracy)
+	{
+		pHit = true;
+		int range = rand() % 41;
+		range -= 20;
+		pDamage = ((playerMove->power / 100) * Global::Player->stats[0]) * playerMove->baseDamage;
+	}
+	else
+	{
+		pHit = false;
+	}
+
+
+	move* eMove;
+
+	if (e.moves.size() == 1)
+	{
+		eMove = e.moves[0];
+	}
+	else if (false)
+	{
+
+	}
+	else
+	{
+		eMove = e.moves[0];
+	}
+
+
+	if (rand() % 101 < e.stats[1] + eMove->accuracy)
+	{
+		eHit = true;
+		int range = rand() % 41;
+		range -= 20;
+		eDamage = ((eMove->power / 100) * e.stats[0]) * eMove->baseDamage;
+	}
+	else
+	{
+		eHit = false;
+	}
+
+
+	if ((rand() % 101) + (Global::Player->stats[1] + Global::Player->stats[2]) * playerMove->speedModifier < (rand() % 101) + (e.stats[1] + e.stats[2]) * eMove->speedModifier)
+	{
+		if (pHit == true)
+		{
+			Global::Player->health -= eDamage;
+		}
+		if (eHit == true)
+		{
+			e.health -= pDamage;
+		}
+		
+		
+	}
+	else
+	{
+		if (eHit == true)
+		{
+			e.health -= pDamage;
+		}
+		if (pHit == true)
+		{
+			Global::Player->health -= eDamage;
+		}
+	}
+
 
 }
 

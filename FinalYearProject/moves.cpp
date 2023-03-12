@@ -5,7 +5,7 @@ std::vector<move*> MoveController::moves = std::vector<move*>();
 MoveController::MoveController()
 {
 	moves.reserve(16);
-	moves.push_back(new move(10, "punch", 0, 100, 90, "physical"));
+	moves.push_back(new move(10, "punch", 0, 100, 90, "physical", 1.0f, 1));
 }
 
 move* MoveController::getMove(uint32_t id)
