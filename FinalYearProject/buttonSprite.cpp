@@ -8,14 +8,14 @@ buttonSprite::buttonSprite()
 
 buttonSprite::buttonSprite(float width, float height, sf::Color colour)
 {
-	shape = new sf::RectangleShape(sf::Vector2f(width, height));
-	shape->setOrigin(width / 2, height /2);
-	shape->setFillColor(colour);
+	shape = sf::RectangleShape(sf::Vector2f(width, height));
+	shape.setOrigin(width / 2, height /2);
+	shape.setFillColor(colour);
 }
 
 buttonSprite::buttonSprite(float width, float height, std::string path)
 {
-	shape = new sf::RectangleShape(sf::Vector2f(width, height));
+	shape = sf::RectangleShape(sf::Vector2f(width, height));
 	try
 	{
 		texture.loadFromFile(path);
@@ -27,12 +27,12 @@ buttonSprite::buttonSprite(float width, float height, std::string path)
 	
 	texture.setSmooth(true);
 
-	shape->setTexture(&texture);
+	shape.setTexture(&texture);
 }
 
 void buttonSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw((*shape), states);
+	target.draw(shape, states);
 }
 
 void *buttonSprite::onClick()
@@ -47,7 +47,7 @@ void buttonSprite::setClick(void* newclick)
 
 void buttonSprite::setPos(float xPos, float yPos)
 {
-	shape->setPosition(sf::Vector2f(xPos, yPos));
+	shape.setPosition(sf::Vector2f(xPos, yPos));
 }
 
 void buttonSprite::movePos(float xOffset, float yOffset)
@@ -56,10 +56,10 @@ void buttonSprite::movePos(float xOffset, float yOffset)
 
 sf::FloatRect buttonSprite::getLocalBounds()
 {
-	return shape->getLocalBounds();
+	return shape.getLocalBounds();
 }
 
 sf::FloatRect buttonSprite::getGlobalBounds()
 {
-	return shape->getGlobalBounds();
+	return shape.getGlobalBounds();
 }

@@ -18,5 +18,5 @@ public:
 	char type;
 
 private:
-	sf::RectangleShape* shape = nullptr;
+	sf::RectangleShape shape;
 };

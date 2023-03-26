@@ -35,6 +35,12 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	//sprite updates
 	c.update(dtime);
 
+	sceneClean();
+	if (fightDone == new bool(true))
+	{
+		delete fightDone;
+		delete combatScene;
+	}
 
 
 
@@ -75,6 +81,8 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	{
 		if (c.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
 		{
+			combatScene = new combat(this, fightDone);
+
 			if (TransitionController::playing == nullptr)
 			{
 				TransitionController::playTransition(0);
@@ -83,10 +91,11 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 
 			TransitionController::playing->reset();
 			TransitionController::playing == nullptr;
+			enemies[i]->setPos(-400, -400);
 
 
-			combat* combatScene = new combat(this);
 			loadScene(combatScene);
+			return;
 		}
 	}
 

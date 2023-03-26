@@ -15,4 +15,7 @@ public:
 
 	//strength, Dexterity, Constitution, intelligence, wisdom, charisma
 	int stats[6] = { 1, 1, 1, 1, 1, 1 };
+
+	int invsize;
+	//std::vector<item>
 };

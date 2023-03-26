@@ -15,11 +15,11 @@ public:
 	virtual void setClick(void*) override;
 	virtual void setPos(float xPos, float yPos) override;
 	virtual void movePos(float xOffset, float yOffset) override;
-	inline sf::FloatRect getLocalBounds() override { return chara->getLocalBounds(); }
-	inline sf::FloatRect getGlobalBounds() override { return chara->getGlobalBounds(); }
+	inline sf::FloatRect getLocalBounds() override { return chara.getLocalBounds(); }
+	inline sf::FloatRect getGlobalBounds() override { return chara.getGlobalBounds(); }
 
 private:
-	sf::RectangleShape* chara;
+	sf::RectangleShape chara;
 	sf::Texture texture;
 	sf::Vector2f lastpos;
 };

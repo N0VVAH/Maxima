@@ -8,7 +8,7 @@
 void startUp();
 
 scene* Global::curScene = nullptr;
-int Global::framerate = 144;
+int Global::framerate = 60;
 Square* Global::ChatBox = new Square("D:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\ChatBox.png", 400, 120);
 player* Global::Player = new player();
 
@@ -29,7 +29,6 @@ int main()
 	sf::Clock clock;
 	sf::Time start;
 	sf::Time end;
-	sf::Time dTime;
 
 	clock.restart();
 

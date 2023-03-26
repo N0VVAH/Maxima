@@ -15,6 +15,14 @@ class sprite : public sf::Drawable
 {
 public:
 	sprite() { } //default
+	~sprite() 
+	{
+		if (data != nullptr)
+		{
+			delete data;
+		}
+		
+	}
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 	virtual void update(float timestep) {};
 	virtual void updateTexture() {};
@@ -43,7 +51,7 @@ public:
 	inline void setAtlasTileSize(sf::Vector2f size) { uvSize = size; }
 
 protected:
-	void* data;
+	void* data = nullptr;
 	void (*Click)(void);
 
 	sf::Texture texture;

@@ -4,10 +4,13 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include "playerdeath.h"
+#include "fightwon.h"
 
-
-combat::combat(scene* prev)
+combat::combat(scene* prev, bool* done)
 {
+	doneFight = done;
+
 	prevScene = prev;
 	render.reserve(16);
 	UI.reserve(32);
@@ -36,7 +39,7 @@ combat::combat(scene* prev)
 	p.fontSize = 30;
 	p.string = Global::Player->name;
 
-	Text* name = new Text(p);
+	name = new Text(p);
 	name->setPos(300, 120);
 	render.push_back(name);
 
@@ -45,14 +48,14 @@ combat::combat(scene* prev)
 	render.push_back(&enemy);
 
 	p.string = e.name;
-	Text* Ename = new Text(p);
+	Ename = new Text(p);
 	Ename->setPos(1300, 120);
 	render.push_back(Ename);
 
 	//Combat History / Chat box
-	Square* temp = new Square(sf::Color::Black, 400, 300);
-	temp->setPos(200, 650);
-	render.push_back(temp);
+	historyBacking = Square(sf::Color::Black, 400, 300);
+	historyBacking.setPos(200, 650);
+	render.push_back(&historyBacking);
 
 
 
@@ -122,6 +125,8 @@ combat::combat(scene* prev)
 	menu[3]->setClick(&Flee);
 	UI.push_back(menu[3]);
 
+	PlayerDies = new PlayerDeath(prev);
+
 }
 
 void combat::update(sf::RenderWindow* window, float dtime)
@@ -129,6 +134,11 @@ void combat::update(sf::RenderWindow* window, float dtime)
 	sf::Event* events = new sf::Event;
 	while (window->pollEvent(*events))
 	{
+
+		if (Global::curScene != this)
+		{
+			return;
+		}
 
 		switch ((*events).type)
 		{
@@ -196,32 +206,37 @@ void combat::update(sf::RenderWindow* window, float dtime)
 							if (UI[i]->type == 'S')
 							{
 								loadScene(((scene * (*)())UI[i]->onClick())());
+								break;
 							}
 							else if (UI[i]->type == 'f')
 							{
 								char todo = ((char(*)())UI[i]->onClick())();
-								std::cout << todo << "\n";
 								changeButtons(todo);
+								break;
 							}
 							else if (UI[i]->type == 'M')
 							{
 								move* clickedMove = MoveController::getMove((uint32_t)UI[i]->getData());
 								//std::cout << clickedMove->name << "\n";
 								moveSelected(clickedMove);
+								break;
 							}
 							else if (UI[i]->type == 'n')
 							{
 								((void(*)())UI[i]->onClick())();
+								break;
 							}
 							else if (UI[i]->type == ' ')
 							{
 								std::cout << "Nothing\n";
+								break;
 							}
 
 						}
 					}
 
 					mouseDownPos = sf::Vector2i();
+					
 				}
 			}
 
@@ -249,13 +264,7 @@ void combat::update(sf::RenderWindow* window, float dtime)
 
 void combat::changeButtons(char butt)
 {
-	for (size_t i = 0; i < 10; i++)
-	{
-		if (menu[i] != nullptr)
-		{
-			removeFromUI(menu[i]);
-		}
-	}
+
 
 	int moveCount;
 	int start;
@@ -266,6 +275,15 @@ void combat::changeButtons(char butt)
 		{
 			return;
 		}
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			if (menu[i] != nullptr)
+			{
+				removeFromUI(menu[i]);
+			}
+		}
+
 		curDisplayed = 'F';
 		moveCount = Global::Player->moves.size();
 		start = 0;
@@ -329,7 +347,7 @@ void combat::changeButtons(char butt)
 		return;
 
 	case 'b':
-
+		playerBlocks();
 		return;
 
 	case 'i':
@@ -363,7 +381,7 @@ void combat::moveSelected(move* playerMove)
 	bool eHit = false;
 	uint32_t eDamage = 0;
 
-	srand((uint32_t)std::chrono::high_resolution_clock::now);
+	srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
 	uint32_t rando = rand() % 101;
 
@@ -372,7 +390,13 @@ void combat::moveSelected(move* playerMove)
 		pHit = true;
 		int range = rand() % 41;
 		range -= 20;
+		range = (100 - (100 / range)) / 100;
 		pDamage = ((playerMove->power / 100) * Global::Player->stats[0]) * playerMove->baseDamage;
+		pDamage = pDamage * range;
+		if (pDamage == 0)
+		{
+			pDamage = 1;
+		}
 	}
 	else
 	{
@@ -395,13 +419,20 @@ void combat::moveSelected(move* playerMove)
 		eMove = e.moves[0];
 	}
 
+	rando = rand() % 101;
 
-	if (rand() % 101 < e.stats[1] + eMove->accuracy)
+	if (rando < e.stats[1] + eMove->accuracy)
 	{
 		eHit = true;
-		int range = rand() % 41;
+		float range = rand() % 41;
 		range -= 20;
+		range = (100 - (100 / range)) / 100;
 		eDamage = ((eMove->power / 100) * e.stats[0]) * eMove->baseDamage;
+		eDamage = eDamage * range;
+		if (eDamage == 0)
+		{
+			eDamage = 1;
+		}
 	}
 	else
 	{
@@ -414,23 +445,95 @@ void combat::moveSelected(move* playerMove)
 		if (pHit == true)
 		{
 			Global::Player->health -= eDamage;
+			if (Global::Player->health <= 0)
+			{
+				Global::Player->health = 0;
+				loadScene(PlayerDies);
+				closeScene();
+				return;
+			}
 		}
 		if (eHit == true)
 		{
 			e.health -= pDamage;
+			if (e.health <= 0)
+			{
+				e.health = 0;
+				//win scene here
+			}
 		}
 		
 		
 	}
 	else
 	{
-		if (eHit == true)
-		{
-			e.health -= pDamage;
-		}
 		if (pHit == true)
 		{
+			e.health -= pDamage;
+			e.health -= pDamage;
+			if (e.health <= 0)
+			{
+				e.health = 0;
+				//win scene here
+			}
+		}
+		if (eHit == true)
+		{
 			Global::Player->health -= eDamage;
+			if (Global::Player->health <= 0)
+			{
+				Global::Player->health = 0;
+				loadScene(PlayerDies);
+				closeScene();
+				return;
+			}
+		}
+	}
+
+
+}
+
+void combat::playerBlocks()
+{
+	uint32_t rando = rand() % 101;
+	move* eMove;
+	uint32_t eDamage = 0;
+
+	if (e.moves.size() == 1)
+	{
+		eMove = e.moves[0];
+	}
+	else if (false)
+	{
+
+	}
+	else
+	{
+		eMove = e.moves[0];
+	}
+
+	rando = rand() % 101;
+
+	if (rando < e.stats[1] + eMove->accuracy)
+	{
+		float range = rand() % 41;
+		range -= 20;
+		range = (100 - (100 / range)) / 100;
+		eDamage = ((eMove->power / 100) * e.stats[0]) * eMove->baseDamage;
+		eDamage = eDamage * range;
+		eDamage = eDamage / 2;
+		if (eDamage == 0)
+		{
+			eDamage = 1;
+		}
+
+		Global::Player->health -= eDamage;
+		if (Global::Player->health <= 0 )
+		{
+			Global::Player->health = 0;
+			loadScene(PlayerDies);
+			closeScene();
+			return;
 		}
 	}
 
@@ -445,15 +548,18 @@ char combat::inputHandler()
 
 void combat::exitScene()
 {
-
 }
 
 void combat::closeScene()
 {
-
+	doneFight = new bool(true);
+	for (size_t i = 0; i < 10; i++)
+	{
+		delete menu[i];
+	}
 }
 
-void combat::loadScene(scene*)
+void combat::loadScene(scene* next)
 {
-
+	Global::curScene = next;
 }

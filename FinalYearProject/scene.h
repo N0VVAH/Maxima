@@ -40,6 +40,18 @@ public:
 		return false;
 	};
 
+	void sceneClean()
+	{
+		for (size_t i = 0; i < render.size(); i++)
+		{
+			if (render[i]->getPos() == sf::Vector2f(-400, -400))
+			{
+				delete render[i];
+				i--;
+			}
+		}
+	}
+
 protected:
 	std::vector<sprite*> render;
 	std::vector<sprite*> UI;

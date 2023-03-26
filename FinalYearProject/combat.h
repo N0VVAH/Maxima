@@ -7,7 +7,7 @@
 class combat : public scene
 {
 public:
-	combat(scene* prev);
+	combat(scene* prev, bool* done);
 	virtual void update(sf::RenderWindow* window, float dtime) override;
 	//virtual void draw(sf::RenderTarget& target, sf::RenderStates states);
 	virtual char inputHandler()  override;
@@ -24,7 +24,11 @@ private:
 	Enemy e;
 
 	Text* PlayerStats;
+	Text* name;
 	Text* EnemyStats;
+	Text* Ename;
+
+	Square historyBacking;
 
 	Square chara;
 	Square enemy;
@@ -39,9 +43,16 @@ private:
 
 	char curDisplayed = 'n';
 
+	bool* doneFight;
+
 	//functions
 	void changeButtons(char butt);
 
 	void moveSelected(move* playerMove);
+	void playerBlocks();
+
+
+	scene* PlayerDies;
+	scene* PlayerWins;
 
 };

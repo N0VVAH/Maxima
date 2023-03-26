@@ -20,6 +20,8 @@ protected:
 	Square* enemies[10] = {};
 	Square Teach;
 	Square teachCollision;
+	bool* fightDone = new bool(false);
+	scene* combatScene;
 
 private:
 	bool chatboxShowing = false;

@@ -3,7 +3,7 @@
 
 void Charactor::CharSetup(const char* path, int xSize, int ySize)
 {
-	chara = new sf::RectangleShape();
+	chara = sf::RectangleShape();
 	try
 	{
 		texture.loadFromFile(path);
@@ -13,34 +13,34 @@ void Charactor::CharSetup(const char* path, int xSize, int ySize)
 		std::cerr << e.what();
 	}
 
-	chara->setSize({ (float)xSize, (float)ySize });
-	chara->setTexture(&texture);
+	chara.setSize({ (float)xSize, (float)ySize });
+	chara.setTexture(&texture);
 	lastpos = sf::Vector2f{ 50, 50 };
 	type = 'c';
 }
 
 void Charactor::CharSetup(sf::Color colour)
 {
-	chara = new sf::RectangleShape();
-	chara->setSize({ 50, 50 });
-	chara->setFillColor(colour);
+	chara = sf::RectangleShape();
+	chara.setSize({ 50, 50 });
+	chara.setFillColor(colour);
 	lastpos = sf::Vector2f{ 50, 50 };
 	type = 'c';
 }
 
 void Charactor::CharSetup(sf::Color colour, float x, float y)
 {
-	chara = new sf::RectangleShape();
-	chara->setOrigin(25, 25);
-	chara->setSize({ x, y });
-	chara->setFillColor(colour);
+	chara = sf::RectangleShape();
+	chara.setOrigin(25, 25);
+	chara.setSize({ x, y });
+	chara.setFillColor(colour);
 	lastpos = sf::Vector2f{ 50, 50 };
 	type = 'c';
 }
 
 void Charactor::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(*chara, states);
+	target.draw(chara, states);
 }
 
 void Charactor::update(float timestep)
@@ -64,7 +64,7 @@ void Charactor::update(float timestep)
 
 			timeSinceLastTexture = 0.0f;
 
-			chara->setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
+			chara.setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
 
 		}
 	}
@@ -72,7 +72,7 @@ void Charactor::update(float timestep)
 
 void Charactor::updateTexture()
 {
-	chara->setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
+	chara.setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
 }
 
 void* Charactor::onClick()
@@ -87,12 +87,12 @@ void Charactor::setClick(void*)
 
 void Charactor::setPos(float xPos, float yPos)
 {
-	chara->setPosition({ xPos, yPos });
+	chara.setPosition({ xPos, yPos });
 	lastpos = sf::Vector2f{ xPos, yPos };
 }
 
 void Charactor::movePos(float xOffset, float yOffset)
 {
-	lastpos = chara->getPosition();
-	chara->move({ xOffset, yOffset });
+	lastpos = chara.getPosition();
+	chara.move({ xOffset, yOffset });
 }
