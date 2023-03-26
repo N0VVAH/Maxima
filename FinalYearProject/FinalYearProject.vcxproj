@@ -156,6 +156,7 @@
     <ClCompile Include="Charactor.cpp" />
     <ClCompile Include="Combat.cpp" />
     <ClCompile Include="fightwon.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="moves.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fightwon.h" />
     <ClInclude Include="globals.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="moves.h" />
     <ClInclude Include="player.h" />

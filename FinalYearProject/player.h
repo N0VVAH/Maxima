@@ -1,6 +1,8 @@
 #pragma once
 #include "moves.h"
 #include <vector>
+#include "item.h"
+
 
 class player
 {
@@ -17,5 +19,5 @@ public:
 	int stats[6] = { 1, 1, 1, 1, 1, 1 };
 
 	int invsize;
-	//std::vector<item>
+	std::vector<item> inv;
 };
