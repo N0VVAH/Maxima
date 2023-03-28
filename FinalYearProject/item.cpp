@@ -4,7 +4,7 @@ ItemManager::ItemManager()
 {
 	items.resize(32);
 
-	items.push_back(item(0, "test"));
+	//items.push_back(item(0, "test"));
 }
 
 item* ItemManager::getItem(uint32_t id)
@@ -18,7 +18,7 @@ item* ItemManager::getItem(uint32_t id)
 	{
 		if (items[i].id == id)
 		{
-			return new item(items[i]);
+			//return new item(items[i]);
 		}
 	}
 }

@@ -8,17 +8,22 @@ Tutorial::Tutorial() { }
 Tutorial::Tutorial(scene* preScene)
 {
 	prevScene = preScene;
-	c.CharSetup("..\\assets\\images\\testatlas.png", 50, 50);
-	c.setTextureAtlas(textureAtlasProps());
+	c.CharSetup("..\\assets\\images\\chartest.png", 100, 100);
+	textureAtlasProps a = textureAtlasProps();
+	a.timeBetween = 0.3;
+	a.texturesInAtlas = 3;
+	c.setTextureAtlas(a);
 	c.updateTexture();
 	render.push_back(&c);
 	c.setPos(400, 400);
 
-	Teach = Square(sf::Color::Green, 60, 60);
+	Teach.CharSetup("..\\assets\\images\\TeachTest.png", 60, 60);
+	Teach.setTextureAtlas(a);
+	Teach.updateTexture();
 	Teach.setPos(800, 400);
 	render.push_back(&Teach);
 
-	teachCollision = Square(sf::Color::White, 120, 120);
+	teachCollision = Square(sf::Color::Black, 120, 120);
 	teachCollision.setPos(800, 400);
 
 	for (size_t i = 0; i < 10; i++)
@@ -34,6 +39,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
 	//sprite updates
 	c.update(dtime);
+	Teach.update(dtime);
 
 	sceneClean();
 	if (fightDone == new bool(true))

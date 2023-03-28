@@ -18,7 +18,7 @@ public:
 protected:
 	Charactor c;
 	Square* enemies[10] = {};
-	Square Teach;
+	Charactor Teach;
 	Square teachCollision;
 	bool* fightDone = new bool(false);
 	scene* combatScene;

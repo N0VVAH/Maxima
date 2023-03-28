@@ -21,6 +21,7 @@ public:
 	inline sf::FloatRect getGlobalBounds() override { return shape.getGlobalBounds(); }
 	virtual inline void setFillColour(sf::Color colour) override { shape.setFillColor(colour); }
 	inline virtual sf::Vector2f getPos() override { return shape.getPosition(); }
+	void updateTexture() override;
 
 
 private:

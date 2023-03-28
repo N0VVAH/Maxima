@@ -5,6 +5,7 @@
 class item
 {
 public:
+	item() {};
 	item(uint32_t i, const char* n) : id(i), name(n) {}
 	uint32_t id;
 	const char* name;

@@ -38,9 +38,6 @@ Square::Square(const char* path)
 Square::Square(const char* path, int xSize, int ySize)
 {
 	shape = sf::RectangleShape();
-	shape.setSize({(float)xSize, (float)ySize});
-	uvStart = sf::Vector2f(0.0f, 0.0f);
-
 	try
 	{
 		texture.loadFromFile(path);
@@ -49,6 +46,7 @@ Square::Square(const char* path, int xSize, int ySize)
 	{
 		std::cout << "Error loading Texture for Square Sprite " << e.what() << "\n";
 	}
+	shape.setSize({ (float)xSize, (float)ySize });
 	shape.setOrigin(xSize / 2, ySize / 2);
 	shape.setTexture(&texture);
 }
@@ -81,9 +79,32 @@ void Square::update(float timestep)
 {
 	if (textureAtlas == true)
 	{
-		uvStart.x += uvSize.x;
-		shape.setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
+		timeSinceLastTexture += timestep;
+
+		if (timeBetween <= timeSinceLastTexture)
+		{
+			if (curAtlasTexture + 1 == texturesInAtlas)
+			{
+				curAtlasTexture = 0;
+				uvStart = sf::Vector2f(0.0f, 0.0f);
+			}
+			else
+			{
+				curAtlasTexture++;
+				uvStart.x += uvSize.x;
+			}
+
+			timeSinceLastTexture = 0.0f;
+
+			shape.setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
+
+		}
 	}
+}
+
+void Square::updateTexture()
+{
+	shape.setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
 }
 
 void* Square::onClick()
@@ -110,3 +131,4 @@ void Square::changeMapping(sf::IntRect rect)
 {
 	shape.setTextureRect(rect);
 }
+
