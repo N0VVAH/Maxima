@@ -17,7 +17,7 @@ Tutorial::Tutorial(scene* preScene)
 	render.push_back(&c);
 	c.setPos(400, 400);
 
-	Teach.CharSetup("..\\assets\\images\\TeachTest.png", 60, 60);
+	Teach.CharSetup("..\\assets\\images\\TeachTest.png", 100, 100);
 	Teach.setTextureAtlas(a);
 	Teach.updateTexture();
 	Teach.setPos(800, 400);
@@ -26,9 +26,12 @@ Tutorial::Tutorial(scene* preScene)
 	teachCollision = Square(sf::Color::Black, 120, 120);
 	teachCollision.setPos(800, 400);
 
+	a.texturesInAtlas = 5;
 	for (size_t i = 0; i < 10; i++)
 	{
-		enemies[i] = new Square(sf::Color::Red);
+		enemies[i] = new Square("..\\assets\\images\\slimemonster.png", 60, 60);
+		enemies[i]->setTextureAtlas(a);
+		enemies[i]->updateTexture();
 		enemies[i]->setPos(std::rand() % 800, std::rand() % 800);
 		enemies[i]->type = 'E';
 		render.push_back(enemies[i]);
@@ -40,6 +43,10 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	//sprite updates
 	c.update(dtime);
 	Teach.update(dtime);
+	for (int i = 0; i < 10; i++)
+	{
+		enemies[i]->update(dtime);
+	}
 
 	sceneClean();
 	if (fightDone == new bool(true))
@@ -63,7 +70,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		if (chatboxShowing == false)
 		{
 			chatboxShowing = true;
-			Global::ChatBox->setPos(400, 200);
+			Global::ChatBox->setPos(800, 300);
 			render.push_back(Global::ChatBox);
 		}
 

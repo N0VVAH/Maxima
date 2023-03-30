@@ -47,8 +47,9 @@ Square::Square(const char* path, int xSize, int ySize)
 		std::cout << "Error loading Texture for Square Sprite " << e.what() << "\n";
 	}
 	shape.setSize({ (float)xSize, (float)ySize });
-	shape.setOrigin(xSize / 2, ySize / 2);
 	shape.setTexture(&texture);
+	shape.setOrigin(xSize / 2, ySize / 2);
+
 }
 
 Square::Square(const char* path, sf::IntRect rect)
