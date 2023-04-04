@@ -9,7 +9,7 @@ void startUp();
 
 scene* Global::curScene = nullptr;
 int Global::framerate = 60;
-Square* Global::ChatBox = new Square("D:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\ChatBox.png", 450, 150);
+Square* Global::ChatBox = new Square("..\\assets\\images\\textbox.png", 450, 150);
 player* Global::Player = new player();
 
 int main()

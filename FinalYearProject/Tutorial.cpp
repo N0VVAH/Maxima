@@ -22,6 +22,7 @@ Tutorial::Tutorial(scene* preScene)
 	Teach.updateTexture();
 	Teach.setPos(800, 400);
 	render.push_back(&Teach);
+	
 
 	teachCollision = Square(sf::Color::Black, 120, 120);
 	teachCollision.setPos(800, 400);
@@ -39,12 +40,13 @@ Tutorial::Tutorial(scene* preScene)
 
 	textProps p = textProps();
 	p.string = "Ah! You are finally awake, Welcome to the realm of Maxima!\nI didn't catch your name before you passed out,\nbut that isn't important now.\nHave a quick walk around to wake yourself up,\njust like you would as normal.";
-	p.col = sf::Color::White;
+	p.col = sf::Color::Black;
 	p.fontSize = 18.0f;
 
 	tutorialText = new textAppear(p, 0.05f);
 	tutorialText->setPos(800, 300);
 
+	Global::ChatBox->setPos(775, 300);
 	Global::ChatBox->setSize(500, 150);
 	
 }
@@ -76,6 +78,8 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		return;
 	}
 
+
+
 	//Collision Detection
 	if (teachCollision.getGlobalBounds().intersects(c.getGlobalBounds()))
 	{
@@ -83,7 +87,6 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		if (chatboxShowing == false)
 		{
 			chatboxShowing = true;
-			Global::ChatBox->setPos(775, 300);
 			render.push_back(Global::ChatBox);
 			UI.push_back(tutorialText);
 		}
@@ -150,6 +153,16 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 			{
 				c.movePos(500 * dtime, 0);
 			}
+			if ((*events).key.code == sf::Keyboard::Enter)
+			{
+				if (tutorialText->isDone() == true)
+				{
+					tutorialText->updateText("Good! Now to survive in this world you will need to fight.\nSo go rough up one of those slime monster behind me.\nThey are a push over, bred for food not fighting.");
+				}
+
+				tutorialText->changeSpeed(0.025f);
+				
+			}
 
 			switch ((*events).key.code)
 			{
@@ -164,6 +177,15 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 
 			render[0] = &c;
 
+		case sf::Event::KeyReleased:
+			if ((*events).key.code == sf::Keyboard::Enter)
+			{
+				if (tutorialText->getSpeed() != 0.05f)
+				{
+					tutorialText->changeSpeed(0.05f);
+				}
+			}
+			break;
 
 		case sf::Event::Closed:
 			(*window).close();
