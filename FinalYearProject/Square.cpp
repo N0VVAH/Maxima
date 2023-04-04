@@ -133,3 +133,8 @@ void Square::changeMapping(sf::IntRect rect)
 	shape.setTextureRect(rect);
 }
 
+void Square::setSize(float xOffset, float yOffset)
+{
+	shape.setSize(sf::Vector2f(xOffset, yOffset));
+}
+

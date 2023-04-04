@@ -36,6 +36,17 @@ Tutorial::Tutorial(scene* preScene)
 		enemies[i]->type = 'E';
 		render.push_back(enemies[i]);
 	}
+
+	textProps p = textProps();
+	p.string = "Ah! You are finally awake, Welcome to the realm of Maxima!\nI didn't catch your name before you passed out,\nbut that isn't important now.\nHave a quick walk around to wake yourself up,\njust like you would as normal.";
+	p.col = sf::Color::White;
+	p.fontSize = 18.0f;
+
+	tutorialText = new textAppear(p, 0.05f);
+	tutorialText->setPos(800, 300);
+
+	Global::ChatBox->setSize(500, 150);
+	
 }
 
 void Tutorial::update(sf::RenderWindow* window, float dtime)
@@ -43,6 +54,8 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	//sprite updates
 	c.update(dtime);
 	Teach.update(dtime);
+	
+
 	for (int i = 0; i < 10; i++)
 	{
 		enemies[i]->update(dtime);
@@ -66,12 +79,13 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	//Collision Detection
 	if (teachCollision.getGlobalBounds().intersects(c.getGlobalBounds()))
 	{
-
+		tutorialText->update(dtime);
 		if (chatboxShowing == false)
 		{
 			chatboxShowing = true;
-			Global::ChatBox->setPos(800, 300);
+			Global::ChatBox->setPos(775, 300);
 			render.push_back(Global::ChatBox);
+			UI.push_back(tutorialText);
 		}
 
 	}
@@ -79,14 +93,10 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	{
 		if (chatboxShowing == true)
 		{
-			for (size_t i = 0; i < render.size(); i++)
-			{
-				if (render[i] == Global::ChatBox)
-				{
-					render.erase(render.begin() + i);
-					chatboxShowing = false;
-				}
-			}
+			removeFromUI(tutorialText);
+			removeFromRender(Global::ChatBox);
+			chatboxShowing = false;
+
 		}
 	}
 

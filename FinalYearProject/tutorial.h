@@ -2,6 +2,7 @@
 #include "scene.h"
 #include "globals.h"
 #include "Charactor.h"
+#include "textappear.h"
 
 class Tutorial : public scene
 {
@@ -15,6 +16,7 @@ public:
 	void closeScene() override;
 	void loadScene(scene*) override;
 
+
 protected:
 	Charactor c;
 	Square* enemies[10] = {};
@@ -22,6 +24,7 @@ protected:
 	Square teachCollision;
 	bool* fightDone = new bool(false);
 	scene* combatScene;
+	textAppear* tutorialText;
 
 private:
 	bool chatboxShowing = false;

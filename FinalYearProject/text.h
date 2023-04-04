@@ -28,7 +28,7 @@ public:
 
 	void init();
 
-private:
+protected:
 	textProps props;
 	sf::Font font;
 	sf::Text text;

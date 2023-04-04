@@ -17,6 +17,7 @@ public:
 	virtual void setPos(float xPos, float yPos);
 	virtual void movePos(float xOffset, float yOffset);
 	void changeMapping(sf::IntRect);
+	virtual void setSize(float xOffset, float yOffset) override;
 	inline sf::FloatRect getLocalBounds() override { return shape.getLocalBounds(); }
 	inline sf::FloatRect getGlobalBounds() override { return shape.getGlobalBounds(); }
 	virtual inline void setFillColour(sf::Color colour) override { shape.setFillColor(colour); }
