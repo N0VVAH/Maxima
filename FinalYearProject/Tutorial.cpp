@@ -2,6 +2,7 @@
 #include "iostream"
 #include "combat.h"
 #include "Transitions.h"
+#include <chrono>
 
 Tutorial::Tutorial() { }
 
@@ -15,17 +16,19 @@ Tutorial::Tutorial(scene* preScene)
 	c.setTextureAtlas(a);
 	c.updateTexture();
 	render.push_back(&c);
-	c.setPos(400, 400);
+	c.setPos(200, 400);
 
 	Teach.CharSetup("..\\assets\\images\\TeachTest.png", 100, 100);
 	Teach.setTextureAtlas(a);
 	Teach.updateTexture();
-	Teach.setPos(800, 400);
+	Teach.setPos(600, 400);
 	render.push_back(&Teach);
 	
 
 	teachCollision = Square(sf::Color::Black, 120, 120);
-	teachCollision.setPos(800, 400);
+	teachCollision.setPos(600, 400);
+
+	std::srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
 	a.texturesInAtlas = 5;
 	for (size_t i = 0; i < 10; i++)
@@ -33,9 +36,23 @@ Tutorial::Tutorial(scene* preScene)
 		enemies[i] = new Square("..\\assets\\images\\slimemonster.png", 60, 60);
 		enemies[i]->setTextureAtlas(a);
 		enemies[i]->updateTexture();
-		enemies[i]->setPos(std::rand() % 800, std::rand() % 800);
+		enemies[i]->setPos((std::rand() % 700) + 850, (std::rand() % 600) + 50);
 		enemies[i]->type = 'E';
 		render.push_back(enemies[i]);
+	}
+	
+	for (size_t i = 0; i < 14; i++)
+	{
+		if (i == 5)
+		{
+			fence[5] = Square("..\\assets\\images\\fencegate.png", 60, 60);
+		}
+		else
+		{
+			fence[i] = Square("..\\assets\\images\\fenceleft.png", 60, 60);
+		}
+		fence[i].setPos(750, 30 + (60 * i));
+		render.push_back(&fence[i]);
 	}
 
 	textProps p = textProps();
@@ -44,9 +61,9 @@ Tutorial::Tutorial(scene* preScene)
 	p.fontSize = 18.0f;
 
 	tutorialText = new textAppear(p, 0.05f);
-	tutorialText->setPos(800, 300);
+	tutorialText->setPos(600, 300);
 
-	Global::ChatBox->setPos(775, 300);
+	Global::ChatBox->setPos(575, 300);
 	Global::ChatBox->setSize(500, 150);
 	
 }
@@ -79,55 +96,6 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	}
 
 
-
-	//Collision Detection
-	if (teachCollision.getGlobalBounds().intersects(c.getGlobalBounds()))
-	{
-		tutorialText->update(dtime);
-		if (chatboxShowing == false)
-		{
-			chatboxShowing = true;
-			render.push_back(Global::ChatBox);
-			UI.push_back(tutorialText);
-		}
-
-	}
-	else
-	{
-		if (chatboxShowing == true)
-		{
-			removeFromUI(tutorialText);
-			removeFromRender(Global::ChatBox);
-			chatboxShowing = false;
-
-		}
-	}
-
-	for (size_t i = 0; i < sizeof(enemies) / sizeof(Square*); i++)
-	{
-		if (c.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
-		{
-			combatScene = new combat(this, fightDone);
-
-			if (TransitionController::playing == nullptr)
-			{
-				TransitionController::playTransition(0);
-				return;
-			}
-
-			TransitionController::playing->reset();
-			TransitionController::playing == nullptr;
-			enemies[i]->setPos(-400, -400);
-
-
-			loadScene(combatScene);
-			return;
-		}
-	}
-
-
-
-
 	//Event handling
 	sf::Event* events = new sf::Event;
 	while (window->pollEvent(*events))
@@ -136,23 +104,6 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		{
 
 		case sf::Event::KeyPressed:
-
-			if ((*events).key.code == sf::Keyboard::W)
-			{
-				c.movePos(0, -500 * dtime);
-			}
-			if ((*events).key.code == sf::Keyboard::S)
-			{
-				c.movePos(0, 500 * dtime);
-			}
-			if ((*events).key.code == sf::Keyboard::A)
-			{
-				c.movePos(-500 * dtime, 0);
-			}
-			if ((*events).key.code == sf::Keyboard::D)
-			{
-				c.movePos(500 * dtime, 0);
-			}
 			if ((*events).key.code == sf::Keyboard::Enter)
 			{
 				if (tutorialText->isDone() == true)
@@ -163,6 +114,8 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 				tutorialText->changeSpeed(0.025f);
 				
 			}
+
+			
 
 			switch ((*events).key.code)
 			{
@@ -230,6 +183,83 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 			break;
 		}
 	}
+
+
+	sf::Vector2f movement = sf::Vector2f(0.0f, 0.0f);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		movement += sf::Vector2f(0, -100 * dtime);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		movement += sf::Vector2f(0, 100 * dtime);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		movement += sf::Vector2f(-100 * dtime, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		movement += sf::Vector2f(100 * dtime, 0);
+	}
+
+	c.movePos(movement.x, movement.y);
+
+	//Collision Detection
+	if (teachCollision.getGlobalBounds().intersects(c.getGlobalBounds()))
+	{
+		tutorialText->update(dtime);
+		if (chatboxShowing == false)
+		{
+			chatboxShowing = true;
+			render.push_back(Global::ChatBox);
+			UI.push_back(tutorialText);
+		}
+
+	}
+	else
+	{
+		if (chatboxShowing == true)
+		{
+			removeFromUI(tutorialText);
+			removeFromRender(Global::ChatBox);
+			chatboxShowing = false;
+
+		}
+	}
+
+	for (size_t i = 0; i < sizeof(enemies) / sizeof(Square*); i++)
+	{
+		if (c.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
+		{
+			combatScene = new combat(this, fightDone);
+
+			if (TransitionController::playing == nullptr)
+			{
+				TransitionController::playTransition(0);
+				return;
+			}
+
+			TransitionController::playing->reset();
+			TransitionController::playing == nullptr;
+			enemies[i]->setPos(-400, -400);
+
+
+			loadScene(combatScene);
+			return;
+		}
+	}
+
+	for (int i = 0; i < 14; i++)
+	{
+		if (c.getGlobalBounds().intersects(fence[i].getGlobalBounds()))
+		{
+			c.movePos(-movement.x, -movement.y);
+		}
+	}
+
+
 }
 
 void Tutorial::draw(sf::RenderTarget& target, sf::RenderStates states)
