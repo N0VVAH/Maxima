@@ -47,6 +47,7 @@ public:
 			if (render[i]->getPos() == sf::Vector2f(-400, -400))
 			{
 				delete render[i];
+				render.erase(std::next(render.begin(), i));
 				i--;
 			}
 		}

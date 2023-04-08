@@ -7,8 +7,9 @@
 #include "playerdeath.h"
 #include "fightwon.h"
 
-combat::combat(scene* prev, bool* done)
+combat::combat(scene* prev, bool* done, Enemy en)
 {
+	e = en;
 	doneFight = done;
 
 	prevScene = prev;
@@ -23,7 +24,6 @@ combat::combat(scene* prev, bool* done)
 	Global::Player->moves.push_back(MoveController::getMove(10));
 	Global::Player->moves.push_back(MoveController::getMove(10));
 
-	e.moves.push_back(MoveController::getMove(10));
 
 	//main none changing of battle UI
 	background = Square(sf::Color::Magenta, 1600, 800);
@@ -126,6 +126,7 @@ combat::combat(scene* prev, bool* done)
 	UI.push_back(menu[3]);
 
 	PlayerDies = new PlayerDeath(prev);
+	PlayerWins = new FightWon(prev, e);// , e);
 
 }
 
@@ -197,7 +198,6 @@ void combat::update(sf::RenderWindow* window, float dtime)
 			{
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false && mouseDownPos != sf::Vector2i())
 				{
-
 					mouseUpPos = { events->mouseButton.x, events->mouseButton.y };
 					for (size_t i = 0; i < UI.size(); i++)
 					{
@@ -390,6 +390,10 @@ void combat::moveSelected(move* playerMove)
 		pHit = true;
 		int range = rand() % 41;
 		range -= 20;
+		if (range == 0)
+		{
+			range = 1;
+		}
 		range = (100 - (100 / range)) / 100;
 		pDamage = ((playerMove->power / 100) * Global::Player->stats[0]) * playerMove->baseDamage;
 		pDamage = pDamage * range;
@@ -459,7 +463,7 @@ void combat::moveSelected(move* playerMove)
 			if (e.health <= 0)
 			{
 				e.health = 0;
-				//win scene here
+				loadScene(PlayerWins);
 			}
 		}
 		
@@ -474,7 +478,7 @@ void combat::moveSelected(move* playerMove)
 			if (e.health <= 0)
 			{
 				e.health = 0;
-				//win scene here
+				loadScene(PlayerWins);
 			}
 		}
 		if (eHit == true)

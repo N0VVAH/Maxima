@@ -2,6 +2,7 @@
 #include "buttonSprite.h"
 #include "text.h"
 #include "globals.h"
+#include "buttonfuncs.h"
 
 PlayerDeath::PlayerDeath(scene* ls)
 {
@@ -11,6 +12,7 @@ PlayerDeath::PlayerDeath(scene* ls)
 
 	quit = new buttonSprite(200, 75, sf::Color::Black);
 	quit->setPos(800, 300);
+	quit->setClick(&clickQuick);
 
 	textProps p;
 	p.col = sf::Color::White;
@@ -19,6 +21,7 @@ PlayerDeath::PlayerDeath(scene* ls)
 
 	quitText = new Text(p);
 	quitText->setPos(800, 300);
+	
 
 	loadLastSave = new buttonSprite(200, 75, sf::Color::Black);
 	loadLastSave->setPos(800, 500);

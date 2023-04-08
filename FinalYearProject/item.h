@@ -1,14 +1,16 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include "SFML/Graphics.hpp"
 
 class item
 {
 public:
 	item() {};
-	item(uint32_t i, const char* n) : id(i), name(n) {}
+	item(uint32_t i, const char* n, const char* path = NULL);
 	uint32_t id;
 	const char* name;
+	sf::Texture icon;
 
 private:
 
@@ -20,9 +22,9 @@ class ItemManager
 {
 public:
 	ItemManager();
-	item* getItem(uint32_t id);
+	static item* getItem(uint32_t id);
 
 private:
-	std::vector<item> items;
+	static std::vector<item> items;
 
 };

@@ -3,6 +3,7 @@
 #include "combat.h"
 #include "Transitions.h"
 #include <chrono>
+#include "enemy.h"
 
 Tutorial::Tutorial() { }
 
@@ -41,19 +42,19 @@ Tutorial::Tutorial(scene* preScene)
 		render.push_back(enemies[i]);
 	}
 	
-	for (size_t i = 0; i < 14; i++)
-	{
-		if (i == 5)
-		{
-			fence[5] = Square("..\\assets\\images\\fencegate.png", 60, 60);
-		}
-		else
-		{
-			fence[i] = Square("..\\assets\\images\\fenceleft.png", 60, 60);
-		}
-		fence[i].setPos(750, 30 + (60 * i));
-		render.push_back(&fence[i]);
-	}
+	//for (size_t i = 0; i < 14; i++)
+	//{
+	//	if (i == 5)
+	//	{
+	//		fence[5] = Square("..\\assets\\images\\fencegate.png", 60, 60);
+	//	}
+	//	else
+	//	{
+	//		fence[i] = Square("..\\assets\\images\\fenceleft.png", 60, 60);
+	//	}
+	//	fence[i].setPos(750, 30 + (60 * i));
+	//	render.push_back(&fence[i]);
+	//}
 
 	textProps p = textProps();
 	p.string = "Ah! You are finally awake, Welcome to the realm of Maxima!\nI didn't catch your name before you passed out,\nbut that isn't important now.\nHave a quick walk around to wake yourself up,\njust like you would as normal.";
@@ -80,7 +81,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		enemies[i]->update(dtime);
 	}
 
-	sceneClean();
+
 	if (fightDone == new bool(true))
 	{
 		delete fightDone;
@@ -233,7 +234,14 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	{
 		if (c.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
 		{
-			combatScene = new combat(this, fightDone);
+			Enemy e = Enemy();
+			e.moves.push_back(new move());
+			
+			for (size_t k = 0; k < 20; k++)
+			{
+				e.loottable[k] = 1;
+			}
+			combatScene = new combat(this, fightDone, e);
 
 			if (TransitionController::playing == nullptr)
 			{
@@ -243,6 +251,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 
 			TransitionController::playing->reset();
 			TransitionController::playing == nullptr;
+			removeFromRender(enemies[i]);
 			enemies[i]->setPos(-400, -400);
 
 

@@ -52,6 +52,15 @@ Square::Square(const char* path, int xSize, int ySize)
 
 }
 
+Square::Square(sf::Texture tex, int xSize, int ySize)
+{
+	shape = sf::RectangleShape();
+	shape.setSize({ (float)xSize, (float)ySize });
+	shape.setTexture(&tex);
+	shape.setOrigin(xSize / 2, ySize / 2);
+
+}
+
 Square::Square(const char* path, sf::IntRect rect)
 {
 	shape = sf::RectangleShape();

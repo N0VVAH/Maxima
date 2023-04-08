@@ -14,10 +14,10 @@ player* Global::Player = new player();
 
 int main()
 {
-	startUp();
-
 
 	sf::RenderWindow window(sf::VideoMode(1600, 800), "Maxima");
+
+	startUp();
 
 	Global::window = &window;
 
@@ -62,4 +62,6 @@ void startUp()
 	TransitionController::start();
 
 	MoveController::MoveController();
+
+	ItemManager::ItemManager();
 }

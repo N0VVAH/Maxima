@@ -11,3 +11,5 @@ char Fight();
 char Block();
 char Inv();
 char Flee();
+
+//playerdeath

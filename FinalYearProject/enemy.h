@@ -14,4 +14,7 @@ public:
 
 	//strength, Dexterity, Constitution, intelligence, wisdom, charisma
 	int stats[6] = { 1, 1, 1, 1, 1, 1 };
+
+	uint32_t difficulty = 1;
+	int loottable[20] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, };
 };
