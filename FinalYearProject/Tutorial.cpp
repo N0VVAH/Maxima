@@ -10,6 +10,38 @@ Tutorial::Tutorial() { }
 Tutorial::Tutorial(scene* preScene)
 {
 	prevScene = preScene;
+	//Edge colliders for game scene
+	House = Square(sf::Color::Blue, 1.10f, 1.0f);
+	House.setPos(-400.0, -399.0f);
+	House.setCollider({ 140.0f, 100.0f }, { 280.0f, 200.0f });
+	render.push_back(&House);
+
+	leftSide = Square(sf::Color::Blue, 1.0f, 1.0f);
+	leftSide.setPos(-400.0, -399.0f);
+	leftSide.setCollider({ 1.0f, 450.0f }, {4.0f, 700.0f });
+	render.push_back(&leftSide);
+
+	botSide = Square(sf::Color::Blue, 1.0f, 1.0f);
+	botSide.setPos(-400.0, -399.0f);
+	botSide.setCollider({ 800.0f, 775.0f }, { 1600.0f, 4.0f });
+	render.push_back(&botSide);
+
+	rightSide = Square(sf::Color::Blue, 1.0f, 1.0f);
+	rightSide.setPos(-400.0, -399.0f);
+	rightSide.setCollider({ 1605.0f, 400.0f }, { 4.0f, 800.0f });
+	render.push_back(&rightSide);
+
+	topRightSide = Square(sf::Color::Blue, 1.0f, 1.0f);
+	topRightSide.setPos(-400.0, -399.0f);
+	topRightSide.setCollider({ 1200.0f, 0.0f }, {  800.0f, 4.0f });
+	render.push_back(&topRightSide);
+
+	topLeftSide = Square(sf::Color::Blue, 1.0f, 1.0f);
+	topLeftSide.setPos(-400.0, -399.0f);
+	topLeftSide.setCollider({ 300.0f, 0.0f }, { 600.0f, 4.0f });
+	render.push_back(&topLeftSide);
+
+
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -20,7 +52,7 @@ Tutorial::Tutorial(scene* preScene)
 		else
 		{
 			fence[i] = new Square("..\\assets\\images\\fenceleft.png", 256, 256);
-			fence[i]->setCollider({ 690.0f, 128.0f + (256.0f * i) }, { 10.0f, 256.0f });
+			fence[i]->setCollider({ 735.0f, 128.0f + (256.0f * i) }, { 10.0f, 256.0f });
 		}
 		fence[i]->setPos(800, 128 + (256 * i));
 		render.push_back(fence[i]);

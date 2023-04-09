@@ -28,6 +28,14 @@ protected:
 	textAppear* tutorialText;
 	Square* background;
 
+	//edge collider for scene
+	Square House;
+	Square leftSide;
+	Square botSide;
+	Square rightSide;
+	Square topRightSide;
+	Square topLeftSide;
+
 private:
 	bool chatboxShowing = false;
 };
