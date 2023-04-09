@@ -117,6 +117,15 @@ void Square::updateTexture()
 	shape.setTextureRect(sf::IntRect(uvStart.x, uvStart.y, uvSize.x, uvSize.y));
 }
 
+void Square::setCollider(sf::Vector2f pos, sf::Vector2f size)
+{
+	hasCollider = true;
+	Collider = sf::RectangleShape();
+	Collider.setOrigin(size / 2.0f);
+	Collider.setSize(size);
+	Collider.setPosition(pos);
+}
+
 void* Square::onClick()
 {
 	return nullptr;
@@ -135,6 +144,10 @@ void Square::setPos(float xPos, float yPos)
 void Square::movePos(float xOffset, float yOffset)
 {
 	shape.move({xOffset, yOffset});
+	if (hasCollider == true)
+	{
+		Collider.move({ xOffset, yOffset });
+	}
 }
 
 void Square::changeMapping(sf::IntRect rect)

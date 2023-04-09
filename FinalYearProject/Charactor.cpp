@@ -38,6 +38,15 @@ void Charactor::CharSetup(sf::Color colour, float x, float y)
 	type = 'c';
 }
 
+void Charactor::setCollider(sf::Vector2f pos, sf::Vector2f size)
+{
+	hasCollider = true;
+	Collider = sf::RectangleShape();
+	Collider.setOrigin(size / 2.0f);
+	Collider.setSize(size);
+	Collider.setPosition(pos);
+}
+
 void Charactor::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(chara, states);
@@ -95,4 +104,8 @@ void Charactor::movePos(float xOffset, float yOffset)
 {
 	lastpos = chara.getPosition();
 	chara.move({ xOffset, yOffset });
+	if (hasCollider == true)
+	{
+		Collider.move({ xOffset, yOffset });
+	}
 }

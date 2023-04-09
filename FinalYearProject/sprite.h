@@ -50,6 +50,9 @@ public:
 	}
 	inline bool getTextureAtlas() { return textureAtlas; }
 	inline void setAtlasTileSize(sf::Vector2f size) { uvSize = size; }
+	bool hasCollider = false;
+	sf::RectangleShape Collider;
+	virtual void setCollider(sf::Vector2f pos, sf::Vector2f size) {};
 
 protected:
 	void* data = nullptr;

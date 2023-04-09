@@ -17,6 +17,7 @@ public:
 	virtual void movePos(float xOffset, float yOffset) override;
 	inline sf::FloatRect getLocalBounds() override { return chara.getLocalBounds(); }
 	inline sf::FloatRect getGlobalBounds() override { return chara.getGlobalBounds(); }
+	virtual void setCollider(sf::Vector2f pos, sf::Vector2f size) override;
 
 private:
 	sf::RectangleShape chara;

@@ -10,7 +10,28 @@ Tutorial::Tutorial() { }
 Tutorial::Tutorial(scene* preScene)
 {
 	prevScene = preScene;
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (i == 2)
+		{
+			fence[2] = new Square("..\\assets\\images\\fencegate.png", 256, 256);
+		}
+		else
+		{
+			fence[i] = new Square("..\\assets\\images\\fenceleft.png", 256, 256);
+			fence[i]->setCollider({ 690.0f, 128.0f + (256.0f * i) }, { 10.0f, 256.0f });
+		}
+		fence[i]->setPos(800, 128 + (256 * i));
+		render.push_back(fence[i]);
+	}
+
+	background = new Square("..\\assets\\images\\backgrounds\\tutorial.png", 1600, 800);
+	background->setPos(800, 400);
+
+
 	c.CharSetup("..\\assets\\images\\chartest.png", 100, 100);
+	c.setCollider({ 250.0f, 450.0f }, { 64.0f, 64.0f });
 	textureAtlasProps a = textureAtlasProps();
 	a.timeBetween = 0.3;
 	a.texturesInAtlas = 3;
@@ -41,20 +62,6 @@ Tutorial::Tutorial(scene* preScene)
 		enemies[i]->type = 'E';
 		render.push_back(enemies[i]);
 	}
-	
-	//for (size_t i = 0; i < 14; i++)
-	//{
-	//	if (i == 5)
-	//	{
-	//		fence[5] = Square("..\\assets\\images\\fencegate.png", 60, 60);
-	//	}
-	//	else
-	//	{
-	//		fence[i] = Square("..\\assets\\images\\fenceleft.png", 60, 60);
-	//	}
-	//	fence[i].setPos(750, 30 + (60 * i));
-	//	render.push_back(&fence[i]);
-	//}
 
 	textProps p = textProps();
 	p.string = "Ah! You are finally awake, Welcome to the realm of Maxima!\nI didn't catch your name before you passed out,\nbut that isn't important now.\nHave a quick walk around to wake yourself up,\njust like you would as normal.";
@@ -62,9 +69,9 @@ Tutorial::Tutorial(scene* preScene)
 	p.fontSize = 18.0f;
 
 	tutorialText = new textAppear(p, 0.05f);
-	tutorialText->setPos(600, 300);
+	tutorialText->setPos(600, 725);
 
-	Global::ChatBox->setPos(575, 300);
+	Global::ChatBox->setPos(575, 725);
 	Global::ChatBox->setSize(500, 150);
 	
 }
@@ -232,7 +239,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 
 	for (size_t i = 0; i < sizeof(enemies) / sizeof(Square*); i++)
 	{
-		if (c.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
+		if (c.Collider.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
 		{
 			Enemy e = Enemy();
 			e.moves.push_back(new move());
@@ -250,7 +257,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 			}
 
 			TransitionController::playing->reset();
-			TransitionController::playing == nullptr;
+			TransitionController::playing = nullptr;
 			removeFromRender(enemies[i]);
 			enemies[i]->setPos(-400, -400);
 
@@ -260,11 +267,19 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		}
 	}
 
-	for (int i = 0; i < 14; i++)
+	for (int i = 0; i < render.size(); i++)
 	{
-		if (c.getGlobalBounds().intersects(fence[i].getGlobalBounds()))
+		if (render[i]->hasCollider == true)
 		{
-			c.movePos(-movement.x, -movement.y);
+			if (render[i] == &c)
+			{
+				continue;
+			}
+			if (c.Collider.getGlobalBounds().intersects(render[i]->Collider.getGlobalBounds()))
+			{
+				c.movePos(-movement.x, -movement.y);
+				break;
+			}
 		}
 	}
 
@@ -273,6 +288,8 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 
 void Tutorial::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
+	background->draw(target, states);
+
 	for (size_t i = 0; i < render.size(); i++)
 	{
 		render[i]->draw(target, states);

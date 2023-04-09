@@ -20,12 +20,13 @@ public:
 protected:
 	Charactor c;
 	Square* enemies[10] = {};
-	Square fence[14] = {};
+	Square* fence[5] = {};
 	Charactor Teach;
 	Square teachCollision;
 	bool* fightDone = new bool(false);
 	scene* combatScene;
 	textAppear* tutorialText;
+	Square* background;
 
 private:
 	bool chatboxShowing = false;

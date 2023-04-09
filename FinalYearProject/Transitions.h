@@ -23,13 +23,13 @@ public:
 	battleTransitionOne()
 	{
 		id = 0;
-		barOne = new Square(sf::Color::Cyan, 1600, 200);
+		barOne = new Square(sf::Color::Black, 1600, 200);
 
-		barTwo = new Square(sf::Color::Cyan, 1600, 200);
+		barTwo = new Square(sf::Color::Black, 1600, 200);
 
-		barThree = new Square(sf::Color::Cyan, 1600, 200);
+		barThree = new Square(sf::Color::Black, 1600, 200);
 
-		barFour = new Square(sf::Color::Cyan, 1600, 200);
+		barFour = new Square(sf::Color::Black, 1600, 200);
 
 		reset();
 	}
@@ -51,6 +51,7 @@ public:
 		barTwo->setPos(2400, 300);
 		barThree->setPos(-800, 500);
 		barFour->setPos(2400, 700);
+		done = false;
 	}
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) override
 	{
