@@ -17,4 +17,7 @@ public:
 	static Square* ChatBox;
 
 	static player* Player;
+
+	static sf::View* mainView;
+	static bool updateView;
 };

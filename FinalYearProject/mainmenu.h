@@ -15,4 +15,10 @@ public:
 protected:
 
 private:
+	Square* background;
+	Square* player;
+	sf::Vector2f viewPos;
+	float yMovement = 0.0f;
+	float xMovement = 0.0f;
+
 };

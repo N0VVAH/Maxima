@@ -2,10 +2,20 @@
 #include <iostream>
 #include "buttonSprite.h"
 #include "buttonfuncs.h"
+#include <chrono>
 
 
 MainMenu::MainMenu()
 {
+	background = new Square("..\\assets\\images\\backgrounds\\mainmenu.png", 3200, 3200);
+	background->setPos(800, 400);
+	render.push_back(background);
+
+	player = new Square("..\\assets\\images\\playersingle.png", 128, 128);
+	player->setPos(200, 200);
+	render.push_back(player);
+
+
 	UI.push_back(new buttonSprite(300, 100, sf::Color::White));
 	UI[0]->setPos(800, 200);
 	UI[0]->setClick(&clickStart);
@@ -37,12 +47,13 @@ MainMenu::MainMenu()
 
 	UI.push_back(Start);
 	UI.push_back(Quit);
-	render.push_back(Title);
+	UI.push_back(Title);
 
+	viewPos = sf::Vector2f(0.0f, 0.0f);
 
-
-	//UI.push_back(new buttonSprite(100, 100, "E:\\Files\\UNI year 3 Work\\Final Year Project\\Maxima\\x64\\Debug\\Sprites\\lol.png"));
-	//UI[0]->setPos(200, 200);
+	yMovement = 19.47f;
+	xMovement = 80.64f;
+	std::srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 }
 
 
@@ -50,6 +61,28 @@ void MainMenu::update(sf::RenderWindow* window, float dtime)
 {
 	sf::Event* events = new sf::Event;
 	
+	//randomly moves the camera
+	if ((viewPos.x >= 800 && xMovement >= 0.0f) || (viewPos.x <= -800 && xMovement <= 0.0f))
+	{
+		xMovement += ((std::rand() % 200) - 100) / 100;
+		xMovement *= -1;
+	}
+	if ((viewPos.y >= 1000 && yMovement >= 0.0f) || (viewPos.y <= -800 && yMovement <= 0.0f))
+	{
+		yMovement += ((std::rand() % 200) - 100) / 100;
+		yMovement *= -1;
+	}
+
+	sf::Vector2f frameMovement = sf::Vector2f(xMovement * dtime, yMovement * dtime);
+	viewPos += frameMovement;
+	Global::mainView->move(frameMovement);
+	Global::updateView = true;
+
+	for (size_t i = 0; i < UI.size(); i++)
+	{
+		UI[i]->movePos(frameMovement.x, frameMovement.y);
+	}
+
 
 	while (window->pollEvent(*events))
 	{
@@ -74,7 +107,7 @@ void MainMenu::update(sf::RenderWindow* window, float dtime)
 				mouseUpPos = { events->mouseButton.x, events->mouseButton.y };
 				for (size_t i = 0; i < UI.size(); i++)
 				{
-					if (UI[i]->getGlobalBounds().contains(mouseDownPos.x, mouseDownPos.y) && UI[i]->getGlobalBounds().contains(mouseUpPos.x, mouseUpPos.y))
+					if (UI[i]->getGlobalBounds().contains(mouseDownPos.x + viewPos.x, mouseDownPos.y + viewPos.y) && UI[i]->getGlobalBounds().contains(mouseUpPos.x + viewPos.x, mouseUpPos.y + viewPos.y))
 					{
 						if (UI[i]->type == 'S')
 						{

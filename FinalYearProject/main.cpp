@@ -11,6 +11,8 @@ scene* Global::curScene = nullptr;
 int Global::framerate = 60;
 Square* Global::ChatBox = new Square("..\\assets\\images\\textbox.png", 450, 150);
 player* Global::Player = new player();
+sf::View* Global::mainView = new sf::View();
+bool Global::updateView = false;
 
 int main()
 {
@@ -18,6 +20,12 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1600, 800), "Maxima");
 
 	startUp();
+
+	sf::View* mainView;
+	mainView = new sf::View(sf::FloatRect(0.0, 0.0, 1600.0f, 800.0f));
+	window.setView(*mainView);
+
+	Global::mainView = mainView;
 
 	Global::window = &window;
 
@@ -45,6 +53,11 @@ int main()
 		else
 		{
 			Global::curScene->update(&window, (end - start).asSeconds());
+		}
+		if (Global::updateView == true)
+		{
+			window.setView(*Global::mainView);
+			Global::updateView = false;
 		}
 		Global::curScene->draw(window, sf::RenderStates::Default);
 		window.display();
