@@ -20,7 +20,7 @@ public:
 private:
 	Square done;
 	Text* tDone;
-	Square items[20] = {};
+	Square* items[20] = {};
 	Text* Gold;
 	Text* YourInv;
 	Text* LootAbleItems;

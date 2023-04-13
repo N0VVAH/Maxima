@@ -9,7 +9,7 @@ public:
 	Square(sf::Color);
 	Square(const char* path);
 	Square(const char* path, int xSize, int ySize);
-	Square(sf::Texture tex, int xSize, int ySize);
+	Square(sf::Texture& tex, int xSize, int ySize);
 	Square(const char* path, sf::IntRect);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void update(float timestep) override;

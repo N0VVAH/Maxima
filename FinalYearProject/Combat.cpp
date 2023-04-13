@@ -7,7 +7,7 @@
 #include "playerdeath.h"
 #include "fightwon.h"
 
-combat::combat(scene* prev, bool* done, Enemy en)
+combat::combat(scene* prev, int* done, Enemy en)
 {
 	e = en;
 	doneFight = done;
@@ -556,7 +556,7 @@ void combat::exitScene()
 
 void combat::closeScene()
 {
-	doneFight = new bool(true);
+	*doneFight = 1;
 	for (size_t i = 0; i < 10; i++)
 	{
 		delete menu[i];
@@ -566,4 +566,5 @@ void combat::closeScene()
 void combat::loadScene(scene* next)
 {
 	Global::curScene = next;
+	closeScene();
 }

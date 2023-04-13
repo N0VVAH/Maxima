@@ -111,6 +111,8 @@ void MainMenu::update(sf::RenderWindow* window, float dtime)
 					{
 						if (UI[i]->type == 'S')
 						{
+							Global::mainView->move(-viewPos);
+							Global::updateView = true;
 							loadScene(((scene * (*)())UI[i]->onClick())());
 						}
 						else

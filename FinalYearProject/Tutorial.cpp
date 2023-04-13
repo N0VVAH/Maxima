@@ -4,6 +4,7 @@
 #include "Transitions.h"
 #include <chrono>
 #include "enemy.h"
+#include "mainworld.h"
 
 Tutorial::Tutorial() { }
 
@@ -41,6 +42,9 @@ Tutorial::Tutorial(scene* preScene)
 	topLeftSide.setCollider({ 300.0f, 0.0f }, { 600.0f, 4.0f });
 	render.push_back(&topLeftSide);
 
+
+	exit = Square(sf::Color::Black, 80.0f, 30.0f);
+	exit.setPos(660.0f, 0.0f);
 
 
 	for (int i = 0; i < 5; i++)
@@ -105,6 +109,7 @@ Tutorial::Tutorial(scene* preScene)
 
 	Global::ChatBox->setPos(575, 725);
 	Global::ChatBox->setSize(500, 150);
+	fightDone = new int(0);
 	
 }
 
@@ -121,9 +126,11 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	}
 
 
-	if (fightDone == new bool(true))
+	if (*fightDone == 1)
 	{
-		delete fightDone;
+		beenInFight = true;
+		tutorialText->updateText("Wow! Your a natural at combat, you shouldn't have any\nproblems in Maxima.\nGo head north (or up) to head in to the town.");
+		*fightDone = 0;
 		delete combatScene;
 	}
 
@@ -146,7 +153,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		case sf::Event::KeyPressed:
 			if ((*events).key.code == sf::Keyboard::Enter)
 			{
-				if (tutorialText->isDone() == true)
+				if (tutorialText->isDone() == true && beenInFight == false)
 				{
 					tutorialText->updateText("Good! Now to survive in this world you will need to fight.\nSo go rough up one of those slime monster behind me.\nThey are a push over, bred for food not fighting.");
 				}
@@ -247,6 +254,13 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 	c.movePos(movement.x, movement.y);
 
 	//Collision Detection
+	if (exit.getGlobalBounds().intersects(c.Collider.getGlobalBounds()))
+	{
+		loadScene(new MainWorld(prevScene));
+		closeScene();
+		return;
+	}
+
 	if (teachCollision.getGlobalBounds().intersects(c.getGlobalBounds()))
 	{
 		tutorialText->update(dtime);
@@ -275,11 +289,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		{
 			Enemy e = Enemy();
 			e.moves.push_back(new move());
-			
-			for (size_t k = 0; k < 20; k++)
-			{
-				e.loottable[k] = 1;
-			}
+			e.loottable[0] = 2;
 			combatScene = new combat(this, fightDone, e);
 
 			if (TransitionController::playing == nullptr)
@@ -346,7 +356,7 @@ char Tutorial::inputHandler()
 
 void Tutorial::exitScene()
 {
-	Global::curScene = prevScene;
+
 }
 
 void Tutorial::closeScene()

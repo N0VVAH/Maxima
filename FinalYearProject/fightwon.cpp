@@ -45,11 +45,10 @@ FightWon::FightWon(scene* prev, Enemy en)
 	{
 		if (e.loottable[i] != -1)
 		{
-			item* it = ItemManager::getItem(e.loottable[i]);
-			items[i] = Square(it->icon, 96, 96);
-			delete it;
-			items[i].setPos(400 + (150 * (i % 5)), 200 + (150 * (i / 5)));
-			UI.push_back(&items[i]);
+			items[i] = new Square(*ItemManager::getTexture(e.loottable[i]), 96, 96);
+			//delete it;
+			items[i]->setPos(400 + (150 * (i % 5)), 200 + (150 * (i / 5)));
+			UI.push_back(items[i]);
 		}
 	}
 }

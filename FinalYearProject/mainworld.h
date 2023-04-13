@@ -4,11 +4,11 @@
 #include "Charactor.h"
 #include "textappear.h"
 
-class Tutorial : public scene
+class MainWorld : public scene
 {
 public:
-	Tutorial();
-	Tutorial(scene*);
+	MainWorld();
+	MainWorld(scene*);
 	void update(sf::RenderWindow* window, float dtime) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 	char inputHandler() override;
@@ -20,26 +20,12 @@ public:
 protected:
 	Charactor c;
 	Square* enemies[10] = {};
-	Square* fence[5] = {};
-	Charactor Teach;
-	int* fightDone = 0;
-	bool beenInFight = false;
+
 	scene* combatScene;
-	textAppear* tutorialText;
+	bool* fightDone = new bool(false);
+
 	Square* background;
 
-	//Colliders
-	Square teachCollision;
-	Square exit;
-
-	//edge collider for scene
-	Square House;
-	Square leftSide;
-	Square botSide;
-	Square rightSide;
-	Square topRightSide;
-	Square topLeftSide;
 
 private:
-	bool chatboxShowing = false;
 };
