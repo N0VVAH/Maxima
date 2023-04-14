@@ -164,6 +164,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playerdeath.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextAppear.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="playerdeath.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="square.h" />
     <ClInclude Include="text.h" />

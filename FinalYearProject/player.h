@@ -20,5 +20,5 @@ public:
 	int stats[6] = { 1, 1, 1, 1, 1, 1 };
 
 	int invsize;
-	std::vector<item> inv;
+	std::vector<unsigned int> inv;
 };

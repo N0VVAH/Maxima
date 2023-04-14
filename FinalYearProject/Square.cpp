@@ -126,6 +126,11 @@ void Square::setCollider(sf::Vector2f pos, sf::Vector2f size)
 	Collider.setPosition(pos);
 }
 
+void Square::setTransparency(int value)
+{
+	shape.setFillColor(sf::Color(255.0f, 255.0f, 255.0f, value));
+}
+
 void* Square::onClick()
 {
 	return nullptr;

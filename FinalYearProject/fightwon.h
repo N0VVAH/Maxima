@@ -18,10 +18,14 @@ public:
 	Enemy e;
 
 private:
+	sf::Texture grey;
+	Square greyedout[20] = {};
 	Square done;
 	Text* tDone;
 	Square* items[20] = {};
 	Text* Gold;
 	Text* YourInv;
 	Text* LootAbleItems;
+	Square* background;
+	std::vector<int> CollectedItems;
 };

@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "iostream"
 #include "Transitions.h"
+#include "sound.h"
 
 void startUp();
 
@@ -77,4 +78,6 @@ void startUp()
 	MoveController::MoveController();
 
 	ItemManager::ItemManager();
+
+	SoundsController::init();
 }

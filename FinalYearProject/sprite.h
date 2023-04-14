@@ -19,7 +19,7 @@ public:
 	{
 		if (data != nullptr)
 		{
-			delete data;
+			data = (void*)int(0);
 		}
 		
 	}

@@ -1,5 +1,6 @@
 #include "fightwon.h"
 #include <chrono>
+#include <iostream>
 
 FightWon::FightWon(scene* prev, Enemy en)
 {
@@ -7,16 +8,30 @@ FightWon::FightWon(scene* prev, Enemy en)
 	std::srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 	prevScene = prev;
 
-	done = Square(sf::Color::White, 150, 50);
-	done.setPos(1400, 700);
+	background = new Square("..\\assets\\images\\backgrounds\\playerwin.png", 1600, 800);
+	background->setPos(800, 400);
+	render.push_back(background);
+
+	done = Square(sf::Color::Black, 150, 50);
+	done.setPos(1400, 710);
 	done.type = 'b';
 	UI.push_back(&done);
+
+	try
+	{
+		grey.loadFromFile("..\\assets\\images\\icons\\greyedout.png");
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << "ERROR LOADING GEEDOUT TEXTURE IS AS FOLLOWS" << e.what() << "\n";
+	}
+
 
 
 
 	uint32_t gold = std::rand() % 10;// *e.difficulty;
 	textProps p;
-	p.col = sf::Color::White;
+	p.col = sf::Color::Black;
 	p.fontSize = 30.f;
 	std::string temp = "Gold Picked Up: ";
 	temp.append(std::to_string(gold));
@@ -33,22 +48,28 @@ FightWon::FightWon(scene* prev, Enemy en)
 	UI.push_back(LootAbleItems);
 
 
-	p.col = sf::Color::Black;
+	p.col = sf::Color::White;
 	p.string = "Done";
 	tDone = new Text(p);
 	tDone->setPos(1400, 700);
 
 	UI.push_back(tDone);
 
+	CollectedItems = std::vector<int>();
 
 	for (int i = 0; i < 20; i++)
 	{
 		if (e.loottable[i] != -1)
 		{
 			items[i] = new Square(*ItemManager::getTexture(e.loottable[i]), 96, 96);
-			//delete it;
 			items[i]->setPos(400 + (150 * (i % 5)), 200 + (150 * (i / 5)));
+			items[i]->setData((void*) e.loottable[i]);
+			items[i]->type = 'i';
 			UI.push_back(items[i]);
+
+			greyedout[i] = Square(grey, 96, 96);
+			greyedout[i].setPos(400 + (150 * (i % 5)), 200 + (150 * (i / 5)));
+			greyedout->setTransparency(128);
 		}
 	}
 }
@@ -84,6 +105,40 @@ void FightWon::update(sf::RenderWindow* window, float dtime)
 						exitScene();
 						return;
 					}
+					if (UI[i]->type == 'i')
+					{
+						UI[i]->type = 'p';
+						for (int k = 0; k < 20; k++)
+						{
+							if (items[k] == UI[i])
+							{
+								int itemID = (int)UI[i]->getData();
+								CollectedItems.push_back(itemID);
+								UI.push_back(&greyedout[k]);
+							}
+						}
+
+					}
+					else if (UI[i]->type == 'p')
+					{
+						UI[i]->type = 'i';
+						int itemID = (int)UI[i]->getData();
+						for (int p = 0; p < CollectedItems.size(); p++)
+						{
+							if (CollectedItems[p] == itemID)
+							{
+								CollectedItems.erase(CollectedItems.begin() + p);
+								for (int k = 0; k < 20; k++)
+								{
+									if (items[k] == UI[i])
+									{
+										removeFromUI(&greyedout[k]);
+									}
+								}
+								break;
+							}
+						}
+					}
 				}
 			}
 
@@ -106,9 +161,22 @@ void FightWon::exitScene()
 
 void FightWon::closeScene()
 {
+	for (size_t i = 0; i < CollectedItems.size(); i++)
+	{
+		Global::Player->inv.push_back(CollectedItems[i]);
+	}
 	delete Gold;
 	delete YourInv;
 	delete LootAbleItems;
+	for (size_t i = 0; i < 20; i++)
+	{
+		if (items[i] != nullptr)
+		{
+			delete items[i];
+		}
+	}
+	delete tDone;
+	delete background;
 }
 
 void FightWon::loadScene(scene*)

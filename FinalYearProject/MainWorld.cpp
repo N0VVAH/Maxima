@@ -1,5 +1,6 @@
 #include "mainworld.h"
 #include "Transitions.h"
+#include "sound.h"
 
 MainWorld::MainWorld()
 {
@@ -8,6 +9,8 @@ MainWorld::MainWorld()
 MainWorld::MainWorld(scene* s)
 {
 	prevScene = s;
+
+	SoundsController::playSound(0, true);
 
 	background = new Square(sf::Color::Black, 1600, 800);
 	background->setPos(800, 400);

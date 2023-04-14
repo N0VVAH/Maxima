@@ -25,6 +25,7 @@ public:
 	inline virtual sf::Vector2f getPos() override { return shape.getPosition(); }
 	void updateTexture() override;
 	virtual void setCollider(sf::Vector2f pos, sf::Vector2f size) override;
+	void setTransparency(int value);
 
 
 private:
