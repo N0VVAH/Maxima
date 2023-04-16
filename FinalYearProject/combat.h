@@ -27,14 +27,14 @@ private:
 	Text* name;
 	Text* EnemyStats;
 	Text* Ename;
+	Text* historyText;
 
-	Square historyBacking;
+	std::string history[10];
 
 	Square chara;
 	Square enemy;
 
 	Square background;
-	Square chatBox;
 
 	Square rightMove;
 	Square leftMove;
@@ -45,14 +45,18 @@ private:
 
 	int* doneFight;
 
+	scene* PlayerDies;
+	scene* PlayerWins;
+
 	//functions
 	void changeButtons(char butt);
 
 	void moveSelected(move* playerMove);
 	void playerBlocks();
 
+	void addHsitory(const char* texty);
+	void writeHistory();
 
-	scene* PlayerDies;
-	scene* PlayerWins;
+
 
 };

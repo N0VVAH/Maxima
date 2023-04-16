@@ -23,7 +23,20 @@ void Text::init()
 
 	text.setFillColor(props.col);
 
-	text.setOrigin(sf::Vector2f(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 2));
+	if (props.origin == 'c')
+	{
+		text.setOrigin(sf::Vector2f(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 2));
+	}
+	else if (props.origin == 'b')
+	{
+		text.setOrigin(sf::Vector2f(0, text.getGlobalBounds().height));
+	}
+	
+}
+
+void Text::updateText(const char* te)
+{
+	text.setString(te);
 }
 
 

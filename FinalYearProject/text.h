@@ -8,6 +8,7 @@ struct textProps
 	sf::Color col = sf::Color::Black;
 	float fontSize = 30;
 	const char* string = "Temp";
+	char origin = 'c';
 };
 
 
@@ -27,6 +28,7 @@ public:
 	virtual inline void changeText(const char* t) override { props.string = t; text.setString(t); }
 
 	void init();
+	void updateText(const char* te);
 
 protected:
 	textProps props;

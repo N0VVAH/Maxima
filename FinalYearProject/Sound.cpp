@@ -8,7 +8,7 @@ void SoundsController::init()
 {
 	//sounds.reserve(16);
 
-	sounds.push_back((soundBase*)(new Music("MainMenu Music", 0, "..\\assets\\sounds\\music\\mainmenu.flac")));
+	//sounds.push_back((soundBase*)(new Music("MainMenu Music", 0, "..\\assets\\sounds\\music\\mainmenu.flac")));
 }
 
 void SoundsController::playSound(int id, bool loop)
