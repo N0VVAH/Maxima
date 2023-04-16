@@ -12,6 +12,8 @@ public:
 	int maxhealth = 10;
 	int maxstamina = 10;
 
+	const char* texture;
+
 	//strength, Dexterity, Constitution, intelligence, wisdom, charisma
 	int stats[6] = { 1, 1, 1, 1, 1, 1 };
 

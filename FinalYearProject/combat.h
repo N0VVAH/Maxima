@@ -31,10 +31,12 @@ private:
 
 	std::string history[10];
 
-	Square chara;
-	Square enemy;
+	Square* chara;
+	Square* enemy;
 
-	Square background;
+	Square* background;
+	Square* playerCircle;
+	Square* enemyCircle;
 
 	Square rightMove;
 	Square leftMove;

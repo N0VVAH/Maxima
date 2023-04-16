@@ -16,7 +16,6 @@ combat::combat(scene* prev, int* done, Enemy en)
 	render.reserve(16);
 	UI.reserve(32);
 	moves.reserve(100);
-	//(Global::Player->moves.size() * 2);
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -30,14 +29,30 @@ combat::combat(scene* prev, int* done, Enemy en)
 	Global::Player->moves.push_back(MoveController::getMove(10));
 
 
-	//main none changing of battle UI
-	background = Square(sf::Color::Magenta, 1600, 800);
-	background.setPos(800, 400);
-	render.push_back(&background);
 
-	chara = Square(sf::Color::Green, 40, 100);
-	chara.setPos(300, 200);
-	render.push_back(&chara);
+	//main none changing of battle UI
+	background = new Square("..\\assets\\images\\backgrounds\\comabt.png", 1600, 800);
+	background->setPos(800, 400);
+	render.push_back(background);
+
+	playerCircle = new Square("..\\assets\\images\\icons\\battlecircle.png", 256, 128);
+	playerCircle->setPos(1300, 250);
+	render.push_back(playerCircle);
+
+	enemyCircle = new Square("..\\assets\\images\\icons\\battlecircle.png", 256, 128);
+	enemyCircle->setPos(300, 250);
+	render.push_back(enemyCircle);
+
+
+	chara = new Square("..\\assets\\images\\sidechar.png", 60, 150);
+	textureAtlasProps a = textureAtlasProps();
+	a.uvSize = sf::Vector2f(40, 100);
+	a.timeBetween = 0.3;
+	a.texturesInAtlas = 4;
+	chara->setTextureAtlas(a);
+	chara->updateTexture();
+	chara->setPos(300, 180);
+	render.push_back(chara);
 
 	textProps p;
 	p.col = sf::Color::Black;
@@ -45,16 +60,21 @@ combat::combat(scene* prev, int* done, Enemy en)
 	p.string = Global::Player->name;
 
 	name = new Text(p);
-	name->setPos(300, 120);
+	name->setPos(300, 100);
 	render.push_back(name);
 
-	enemy = Square(sf::Color::Red, 40, 100);
-	enemy.setPos(1300, 200);
-	render.push_back(&enemy);
+	enemy = new Square(e.texture, 40, 100);
+	enemy->setPos(1300, 200);
+	textureAtlasProps ta = textureAtlasProps();
+	ta.timeBetween = 0.3;
+	ta.texturesInAtlas = 5;
+	enemy->setTextureAtlas(ta);
+	enemy->updateTexture();
+	render.push_back(enemy);
 
 	p.string = e.name;
 	Ename = new Text(p);
-	Ename->setPos(1300, 120);
+	Ename->setPos(1300, 100);
 	render.push_back(Ename);
 
 	//Combat History / Chat box
@@ -92,7 +112,7 @@ combat::combat(scene* prev, int* done, Enemy en)
 	p.col == sf::Color::White;
 
 	PlayerStats = new Text(p);
-	PlayerStats->setPos(300, 280);
+	PlayerStats->setPos(300, 350);
 
 	toSet.clear();
 	toSet.append("Health   : ");
@@ -102,7 +122,7 @@ combat::combat(scene* prev, int* done, Enemy en)
 	p.string = toSet.c_str();
 
 	EnemyStats = new Text(p);
-	EnemyStats->setPos(1300, 280);
+	EnemyStats->setPos(1300, 350);
 
 	UI.push_back(PlayerStats);
 	UI.push_back(EnemyStats);
@@ -125,7 +145,7 @@ combat::combat(scene* prev, int* done, Enemy en)
 	menu[0]->setClick(&Fight);
 	p.string = "Fight";
 	menu[4] = new Text(p);
-	menu[4]->setPos(1100, 500);
+	menu[4]->setPos(1100, 495);
 	UI.push_back(menu[0]);
 	UI.push_back(menu[4]);
 
@@ -166,6 +186,9 @@ combat::combat(scene* prev, int* done, Enemy en)
 
 void combat::update(sf::RenderWindow* window, float dtime)
 {
+	chara->update(dtime);
+	enemy->update(dtime);
+
 	sf::Event* events = new sf::Event;
 	while (window->pollEvent(*events))
 	{
@@ -321,7 +344,7 @@ void combat::changeButtons(char butt)
 		curDisplayed = 'F';
 		moveCount = Global::Player->moves.size();
 		start = 0;
-		if (moveCount > 10) { moveCount = 10; }
+		if (moveCount > 8) { moveCount = 8; }
 		moves.clear();
 
 		for (size_t i = start; i < moveCount; i++)
@@ -482,10 +505,10 @@ void combat::moveSelected(move* playerMove)
 
 	if ((rand() % 101) + (Global::Player->stats[1] + Global::Player->stats[2]) * playerMove->speedModifier < (rand() % 101) + (e.stats[1] + e.stats[2]) * eMove->speedModifier)
 	{
-		if (pHit == true)
+		if (eHit == true)
 		{
 			Global::Player->health -= eDamage;
-			toadd = "You were hit for ";
+			toadd = "You were hit for  ";
 			toadd.append(std::to_string(eDamage));
 			toadd.append(" damage.");
 			addHsitory(toadd.c_str());
@@ -502,7 +525,7 @@ void combat::moveSelected(move* playerMove)
 		{
 			addHsitory("Your enemy missed you");
 		}
-		if (eHit == true)
+		if (pHit == true)
 		{
 			e.health -= pDamage;
 			toadd = "You hit the enemy for ";
@@ -527,7 +550,7 @@ void combat::moveSelected(move* playerMove)
 		if (pHit == true)
 		{
 			e.health -= pDamage;
-			toadd = "You were hit for ";
+			toadd = "You hit the enemy for ";
 			toadd.append(std::to_string(pDamage));
 			toadd.append(" damage.");
 			addHsitory(toadd.c_str());
@@ -539,12 +562,12 @@ void combat::moveSelected(move* playerMove)
 		}
 		else
 		{
-			addHsitory("Your enemy missed you");
+			addHsitory("Your missed your enemy");
 		}
 		if (eHit == true)
 		{
 			Global::Player->health -= eDamage;
-			toadd = "You hit the enemy for ";
+			toadd = "You were hit for ";
 			toadd.append(std::to_string(eDamage));
 			toadd.append(" damage.");
 			addHsitory(toadd.c_str());
@@ -558,7 +581,7 @@ void combat::moveSelected(move* playerMove)
 		}
 		else
 		{
-			addHsitory("You missed your enemy");
+			addHsitory("The enemy missed you");
 		}
 	}
 
