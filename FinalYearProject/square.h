@@ -17,6 +17,12 @@ public:
 	virtual void setClick(void*);
 	virtual void setPos(float xPos, float yPos);
 	virtual void movePos(float xOffset, float yOffset);
+	virtual inline void setRotation(float rot) override {
+		shape.setRotation(rot); if (hasCollider)
+		{
+			Collider.setRotation(rot);
+		}
+	}
 	void changeMapping(sf::IntRect);
 	virtual void setSize(float xOffset, float yOffset) override;
 	inline sf::FloatRect getLocalBounds() override { return shape.getLocalBounds(); }

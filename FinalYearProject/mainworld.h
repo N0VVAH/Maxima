@@ -19,13 +19,25 @@ public:
 
 protected:
 	Charactor c;
+	Square* questGiver;
 	Square* enemies[10] = {};
+	
+
+	sf::Texture hedgeTex;
+	sf::Texture houseTex;
+
+
+	Square* hedges[5];
+	Square* houses[5];
+	Square* shop;
+	Square* henArea;
 
 	scene* combatScene;
 	bool* fightDone = new bool(false);
 
 	Square* background;
 
+	bool renderCollider = false;
 
 private:
 };

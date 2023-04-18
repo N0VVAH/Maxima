@@ -10,13 +10,82 @@ MainWorld::MainWorld(scene* s)
 {
 	prevScene = s;
 
-	SoundsController::playSound(0, true);
-
-	background = new Square(sf::Color::Black, 1600, 800);
+	background = new Square("..\\assets\\images\\backgrounds\\mainworld.png", 1600, 800);
 	background->setPos(800, 400);
 
+	//SoundsController::playSound(0, true);
+	hedgeTex.loadFromFile("..\\assets\\images\\hedge.png");
+	houseTex.loadFromFile("..\\assets\\images\\genhouse.png");
+
+	hedges[0] = new Square(hedgeTex, 128, 64);
+	hedges[0]->setPos(950, 32);
+	hedges[0]->setCollider(sf::Vector2f(950, 32), sf::Vector2f(128, 48));
+	render.push_back(hedges[0]);
+
+	hedges[1] = new Square(hedgeTex, 128, 64);
+	hedges[1]->setPos(1078, 32);
+	hedges[1]->setCollider(sf::Vector2f(1058, 32), sf::Vector2f(128, 48));
+	render.push_back(hedges[1]);
+
+	hedges[2] = new Square(hedgeTex, 128, 64);
+	hedges[2]->setPos(1156, 32);
+	hedges[2]->setCollider(sf::Vector2f(1156, 32), sf::Vector2f(128, 48));
+	render.push_back(hedges[2]);
+
+	hedges[4] = new Square(hedgeTex, 128, 64);
+	hedges[4]->setPos(1220, 32);
+	hedges[4]->setCollider(sf::Vector2f(1200, 32), sf::Vector2f(128, 48));
+	render.push_back(hedges[4]);
+
+	hedges[3] = new Square(hedgeTex, 128, 64);
+	hedges[3]->setPos(1568, 425);
+	hedges[3]->setCollider(sf::Vector2f(1568, 425), sf::Vector2f(128, 48));
+	hedges[3]->setRotation(90.0f);
+	render.push_back(hedges[3]);
+
+
+	houses[0] = new Square(houseTex, 320, 320);
+	houses[0]->setPos(900, 700);
+	houses[0]->setCollider(sf::Vector2f(900, 700), sf::Vector2f(320, 320));
+	render.push_back(houses[0]);
+
+	houses[1] = new Square(houseTex, 320, 320);
+	houses[1]->setPos(1220, 740);
+	houses[1]->setCollider(sf::Vector2f(1220, 740), sf::Vector2f(320, 320));
+	render.push_back(houses[1]);
+
+	houses[2] = new Square(houseTex, 320, 320);
+	houses[2]->setPos(1540, 650);
+	houses[2]->setCollider(sf::Vector2f(1540, 650), sf::Vector2f(320, 320));
+	render.push_back(houses[2]);
+
+	houses[3] = new Square(houseTex, 320, 320);
+	houses[3]->setPos(160, 120);
+	houses[3]->setCollider(sf::Vector2f(160, 120), sf::Vector2f(320, 320));
+	render.push_back(houses[3]);
+
+	houses[4] = new Square(houseTex, 320, 320);
+	houses[4]->setPos(480, 20);
+	houses[4]->setCollider(sf::Vector2f(480, 20), sf::Vector2f(320, 320));
+	render.push_back(houses[4]);
+
+	shop = new Square("..\\assets\\images\\shop.png", 320, 320);
+	shop->setPos(800, 50);
+	shop->setCollider(sf::Vector2f(800, 50), sf::Vector2f(320, 320));
+	render.push_back(shop);
+
+	questGiver = new Square("..\\assets\\images\\womenquestgiver.png", 80, 80);
+	questGiver->setPos(800, 490);
+	questGiver->setCollider(sf::Vector2f(800, 490), sf::Vector2f(64, 64));
+	render.push_back(questGiver);
+
+	henArea = new Square("..\\assets\\images\\hen.png", 640, 640);
+	henArea->setPos(1600, 100);
+	henArea->setCollider({ 1500, 150 }, { 320, 320 });
+	render.push_back(henArea);
+
 	c.CharSetup("..\\assets\\images\\chartest.png", 100, 100);
-	c.setCollider({ 250.0f, 450.0f }, { 64.0f, 64.0f });
+	c.setCollider(sf::Vector2f(600.0f, 700.0f) + sf::Vector2f(60.0f, 64.0f), { 64.0f, 64.0f });
 	textureAtlasProps a = textureAtlasProps();
 	a.timeBetween = 0.3;
 	a.texturesInAtlas = 3;
@@ -91,6 +160,7 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 		case sf::Event::KeyReleased:
 			if ((*events).key.code == sf::Keyboard::Enter)
 			{
+				renderCollider = !renderCollider;
 			}
 			break;
 
@@ -161,6 +231,21 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 	c.movePos(movement.x, movement.y);
 
 	//Collision Detection
+	for (int i = 0; i < render.size(); i++)
+	{
+		if (render[i]->hasCollider == true)
+		{
+			if (render[i] == &c)
+			{
+				continue;
+			}
+			if (c.Collider.getGlobalBounds().intersects(render[i]->Collider.getGlobalBounds()))
+			{
+				c.movePos(-movement.x, -movement.y);
+				break;
+			}
+		}
+	}
 }
 
 void MainWorld::draw(sf::RenderTarget& target, sf::RenderStates states)
@@ -181,6 +266,17 @@ void MainWorld::draw(sf::RenderTarget& target, sf::RenderStates states)
 	{
 		TransitionController::playing->draw(target, states);
 		return;
+	}
+
+	if (renderCollider == true)
+	{
+		for (size_t i = 0; i < render.size(); i++)
+		{
+			if (render[i]->hasCollider == true)
+			{
+				target.draw(render[i]->Collider, states);
+			}
+		}
 	}
 }
 

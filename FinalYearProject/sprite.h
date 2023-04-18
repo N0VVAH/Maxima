@@ -33,6 +33,7 @@ public:
 	virtual void setPos(float xPos, float yPos) = 0;
 	virtual void movePos(float xOffset, float yOffset) = 0;
 	virtual void setSize(float xOffset, float yOffset) {};
+	virtual void setRotation(float rot) {}
 	inline virtual sf::FloatRect getLocalBounds() { return sf::FloatRect(); }
 	inline virtual sf::FloatRect getGlobalBounds() { return sf::FloatRect(); }
 	inline virtual void changeText(const char* text) {}
