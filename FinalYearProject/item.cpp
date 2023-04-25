@@ -22,6 +22,7 @@ ItemManager::ItemManager()
 	items[0] = (new item(0, "test"));
 	items[1] = (new item(1, "BasicSword", "..\\assets\\images\\icons\\basicsword.png"));
 	items[2] = (new item(2, "Slime Chunk", "..\\assets\\images\\icons\\slimeChunk.png"));
+	items[3] = (new item(3, "Slimy Dagger", "..\\assets\\images\\icons\\slimeyDagger.png"));
 }
 
 item* ItemManager::getItem(uint32_t id)

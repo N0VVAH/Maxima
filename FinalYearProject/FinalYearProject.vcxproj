@@ -160,6 +160,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainWorld.cpp" />
+    <ClCompile Include="MainWorldWest.cpp" />
     <ClCompile Include="moves.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playerdeath.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="mainworld.h" />
+    <ClInclude Include="mainworldwest.h" />
     <ClInclude Include="moves.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerdeath.h" />

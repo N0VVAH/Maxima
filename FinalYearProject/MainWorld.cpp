@@ -1,6 +1,9 @@
 #include "mainworld.h"
 #include "Transitions.h"
 #include "sound.h"
+#include "mainworldwest.h"
+
+bool Global::haveSon = false;
 
 MainWorld::MainWorld()
 {
@@ -16,6 +19,13 @@ MainWorld::MainWorld(scene* s)
 	//SoundsController::playSound(0, true);
 	hedgeTex.loadFromFile("..\\assets\\images\\hedge.png");
 	houseTex.loadFromFile("..\\assets\\images\\genhouse.png");
+
+
+	bottomStop = Square(sf::Color::Black, 800, 10);
+	bottomStop.setCollider({ 790, 400 }, { 800, 10 });
+
+	leftTrigger = Square(sf::Color::Black, 10, 800);
+	leftTrigger.setPos(5, 400);
 
 	hedges[0] = new Square(hedgeTex, 128, 64);
 	hedges[0]->setPos(950, 32);
@@ -79,6 +89,43 @@ MainWorld::MainWorld(scene* s)
 	questGiver->setCollider(sf::Vector2f(800, 490), sf::Vector2f(64, 64));
 	render.push_back(questGiver);
 
+	questGiverContact = Square(sf::Color::Blue, 160, 160);
+	questGiverContact.setPos(800, 490);
+
+	render.push_back(Global::ChatBox);
+	Global::ChatBox->setPos(575, 100);
+
+	textProps p;
+	p.string = "Adventurer over here! Please!";
+	p.fontSize = 24;
+	p.col = sf::Color::Black;
+
+	questGiverText = new Text(p);
+	if (Global::haveSon == false)
+	{
+		render.push_back(questGiverText);
+	}
+
+
+	questGiverText->setPos(575, 100);
+
+	if (Global::haveSon == false)
+	{
+		p.string = "Please it's my boy!\nHe's been taken by some goblins\nThey went west. Please you must save him!";
+	}
+	else
+	{
+		p.string = "Thank you so much adventurer!";
+	}
+	questGiverGive = new textAppear(p, 0.05f);
+	questGiverGive->setPos(590, 100);
+	if (Global::haveSon == true)
+	{
+		render.push_back(questGiverGive);
+		textQuestGiverver = 1;
+	}
+
+
 	henArea = new Square("..\\assets\\images\\hen.png", 640, 640);
 	henArea->setPos(1600, 100);
 	henArea->setCollider({ 1500, 150 }, { 320, 320 });
@@ -137,10 +184,11 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 		switch ((*events).type)
 		{
 
+
 		case sf::Event::KeyPressed:
 			if ((*events).key.code == sf::Keyboard::Enter)
 			{
-
+				questGiverGive->changeSpeed(0.025f);
 			}
 
 
@@ -160,7 +208,10 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 		case sf::Event::KeyReleased:
 			if ((*events).key.code == sf::Keyboard::Enter)
 			{
-				renderCollider = !renderCollider;
+				if (questGiverGive->getSpeed() != 0.05f)
+				{
+					questGiverGive->changeSpeed(0.05f);
+				}
 			}
 			break;
 
@@ -231,6 +282,38 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 	c.movePos(movement.x, movement.y);
 
 	//Collision Detection
+	if (c.Collider.getGlobalBounds().intersects(questGiverContact.getGlobalBounds()))
+	{
+		questGiverGive->update(dtime);
+		if (textQuestGiverver == 0)
+		{
+			removeFromRender(questGiverText);
+			render.push_back(questGiverGive);
+			textQuestGiverver = 1;
+		}
+		if (textQuestGiverver == 2)
+		{
+			render.push_back(Global::ChatBox);
+			render.push_back(questGiverGive);
+			textQuestGiverver = 1;
+		}
+	}
+	else
+	{
+		if (textQuestGiverver == 1)
+		{
+			removeFromRender(Global::ChatBox);
+			removeFromRender(questGiverGive);
+			textQuestGiverver = 2;
+		}
+	}
+
+	if (c.Collider.getGlobalBounds().intersects(leftTrigger.getGlobalBounds()))
+	{
+		c.movePos(-movement.x, -movement.y);;
+		loadScene(new MainWorldWest(this));
+	}
+
 	for (int i = 0; i < render.size(); i++)
 	{
 		if (render[i]->hasCollider == true)
@@ -293,6 +376,7 @@ void MainWorld::closeScene()
 {
 }
 
-void MainWorld::loadScene(scene*)
+void MainWorld::loadScene(scene* newS)
 {
+	Global::curScene = newS;
 }

@@ -4,11 +4,11 @@
 #include "Charactor.h"
 #include "textappear.h"
 
-class MainWorld : public scene
+class MainWorldWest : public scene
 {
 public:
-	MainWorld();
-	MainWorld(scene*);
+	MainWorldWest();
+	MainWorldWest(scene*);
 	void update(sf::RenderWindow* window, float dtime) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 	char inputHandler() override;
@@ -19,29 +19,23 @@ public:
 
 protected:
 	Charactor c;
-	Square* questGiver;
-	Square questGiverContact;
-	Square* enemies[10] = {};
+	Square* enemies[4] = {};
+
+	Square* kidSave;
+	Square* kidCage;
 
 	Text* questGiverText;
 	textAppear* questGiverGive;
 	int textQuestGiverver = 0;
-	
+
 
 	sf::Texture hedgeTex;
 	sf::Texture houseTex;
 
-
-	Square* hedges[5];
-	Square* houses[5];
-	Square* shop;
-	Square* henArea;
-
-	Square bottomStop;
-	Square leftTrigger;
+	Square rightTrigger;
 
 	scene* combatScene;
-	bool* fightDone = new bool(false);
+	int* fightDone = new int(0);
 
 	Square* background;
 

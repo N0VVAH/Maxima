@@ -13,6 +13,7 @@ public:
 	int maxstamina = 10;
 
 	const char* texture;
+	int texInAtlas;
 
 	//strength, Dexterity, Constitution, intelligence, wisdom, charisma
 	int stats[6] = { 1, 1, 1, 1, 1, 1 };

@@ -67,7 +67,7 @@ combat::combat(scene* prev, int* done, Enemy en)
 	enemy->setPos(1300, 200);
 	textureAtlasProps ta = textureAtlasProps();
 	ta.timeBetween = 0.3;
-	ta.texturesInAtlas = 5;
+	ta.texturesInAtlas = e.texInAtlas;
 	enemy->setTextureAtlas(ta);
 	enemy->updateTexture();
 	render.push_back(enemy);

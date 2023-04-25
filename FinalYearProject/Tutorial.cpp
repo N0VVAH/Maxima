@@ -291,6 +291,7 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 			e.moves.push_back(new move());
 			e.loottable[0] = 2;
 			e.texture = "..\\assets\\images\\slimemonster.png";
+			e.texInAtlas = 5;
 			combatScene = new combat(this, fightDone, e);
 
 			if (TransitionController::playing == nullptr)

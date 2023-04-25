@@ -5,6 +5,7 @@
 #include "square.h"
 
 
+
 class Global
 {
 public:
@@ -20,4 +21,8 @@ public:
 
 	static sf::View* mainView;
 	static bool updateView;
+
+
+	//Gameplay variables
+	static bool haveSon;
 };
