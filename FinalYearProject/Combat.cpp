@@ -22,12 +22,6 @@ combat::combat(scene* prev, int* done, Enemy en)
 		history[i] = " ";
 	}
 
-	Global::Player->moves.push_back(MoveController::getMove(10));
-	Global::Player->moves.push_back(MoveController::getMove(10));
-	Global::Player->moves.push_back(MoveController::getMove(10));
-	Global::Player->moves.push_back(MoveController::getMove(10));
-	Global::Player->moves.push_back(MoveController::getMove(10));
-
 
 
 	//main none changing of battle UI
@@ -688,10 +682,10 @@ void combat::exitScene()
 void combat::closeScene()
 {
 	*doneFight = 1;
-	for (size_t i = 0; i < 10; i++)
-	{
-		delete menu[i];
-	}
+	//for (size_t i = 0; i < 10; i++)
+	//{
+	//	delete menu[i];
+	//}
 }
 
 void combat::loadScene(scene* next)

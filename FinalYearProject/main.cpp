@@ -39,6 +39,10 @@ int main()
 	sf::Time start;
 	sf::Time end;
 
+
+	Global::Player->moves.push_back(MoveController::getMove(10));
+	Global::Player->moves.push_back(MoveController::getMove(11));
+
 	clock.restart();
 
 	clock.restart();

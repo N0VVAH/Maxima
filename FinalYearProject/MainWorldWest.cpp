@@ -2,6 +2,7 @@
 #include "Transitions.h"
 #include "sound.h"
 #include "combat.h"
+#include <chrono>
 
 MainWorldWest::MainWorldWest()
 {
@@ -43,7 +44,7 @@ MainWorldWest::MainWorldWest(scene* s)
 	c.setPos(1400, 400);
 
 	
-
+	std::srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 	for (size_t i = 0; i < 4; i++)
 	{
 		enemies[i] = new Square("..\\assets\\images\\goblin.png", 60, 60);
@@ -52,7 +53,7 @@ MainWorldWest::MainWorldWest(scene* s)
 		enemies[i]->setTextureAtlas(a);
 		enemies[i]->updateTexture();
 		here:
-		enemies[i]->setPos((std::rand() % 600) + 50, (std::rand() % 600) + 50);
+		enemies[i]->setPos((std::rand() % 700) + 50, (std::rand() % 700) + 50);
 		for (int k = 0; k < i; k++)
 		{
 			if (enemies[k]->getPos().x > kidSave->getPos().x - 100 && enemies[k]->getPos().x < kidSave->getPos().x + 100)
@@ -81,6 +82,13 @@ MainWorldWest::MainWorldWest(scene* s)
 void MainWorldWest::update(sf::RenderWindow* window, float dtime)
 {
 	//sprite updates
+	if (TransitionController::playing != nullptr && TransitionController::playing->isDone() == false)
+	{
+		TransitionController::playing->update(dtime);
+		return;
+	}
+
+
 	c.update(dtime);
 	for (int i = 0; i < 4; i++)
 	{
@@ -218,13 +226,26 @@ void MainWorldWest::update(sf::RenderWindow* window, float dtime)
 	{
 		if (c.Collider.getGlobalBounds().intersects(enemies[i]->getGlobalBounds()))
 		{
+
+			if (TransitionController::playing == nullptr)
+			{
+				TransitionController::playTransition(0);
+				return;
+			}
+
+			TransitionController::playing->reset();
+			TransitionController::playing = nullptr;
+			removeFromRender(enemies[i]);
+			enemies[i]->setPos(-400, -400);
+
 			Enemy e = Enemy();
 			e.name = "Goblin Scout";
-			e.health = 15;
-			e.maxhealth = 15;
+			e.health = 2;
+			e.maxhealth = 2;
 			e.loottable[0] = 3;
 			e.texture = "..\\assets\\images\\goblin.png";
 			e.texInAtlas = 4;
+			e.moves.push_back(MoveController::getMove(10));
 
 			loadScene(new combat(this, fightDone, e));
 		}
