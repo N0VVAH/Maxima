@@ -21,12 +21,14 @@ protected:
 	Charactor c;
 	Square* enemies[4] = {};
 
+	Square wallColliders[3];
+
 	Square* kidSave;
 	Square* kidCage;
+	Square kidtrigger;
 
-	Text* questGiverText;
-	textAppear* questGiverGive;
-	int textQuestGiverver = 0;
+	Text* cantRightNow;
+	bool noEnemy = false;
 
 
 	sf::Texture hedgeTex;

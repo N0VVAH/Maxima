@@ -25,4 +25,5 @@ public:
 
 	//Gameplay variables
 	static bool haveSon;
+	static bool doneFirstQuest;
 };

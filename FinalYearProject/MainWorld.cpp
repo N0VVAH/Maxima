@@ -93,7 +93,6 @@ MainWorld::MainWorld(scene* s)
 	questGiverContact.setPos(800, 490);
 
 	render.push_back(Global::ChatBox);
-	Global::ChatBox->setPos(575, 100);
 
 	textProps p;
 	p.string = "Adventurer over here! Please!";
@@ -150,6 +149,14 @@ MainWorld::MainWorld(scene* s)
 		enemies[i]->setPos((std::rand() % 700) + 850, (std::rand() % 600) + 50);
 		enemies[i]->type = 'E';
 	}
+
+	if (Global::haveSon == true && Global::doneFirstQuest == false)
+	{
+		kidSave = new Square("..\\assets\\images\\kidtosave.png", 48, 48);
+		kidSave->setPos(c.getPos().x, c.getPos().y);
+
+		render.push_back(kidSave);
+	}
 }
 
 void MainWorld::update(sf::RenderWindow* window, float dtime)
@@ -161,13 +168,28 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 		enemies[i]->update(dtime);
 	}
 
+	Global::ChatBox->setPos(575, 100);
+	Global::ChatBox->setSize(500, 150);
 
 	if (fightDone == new bool(true))
 	{
 		delete fightDone;
 		delete combatScene;
 	}
+	if (Global::haveSon == true && Global::doneFirstQuest == false && kidSave == nullptr)
+	{
+		kidSave = new Square("..\\assets\\images\\kidtosave.png", 48, 48);
+		kidSave->setPos(c.getPos().x, c.getPos().y);
 
+		render.push_back(kidSave);
+	}
+	if (Global::haveSon == true && Global::doneFirstQuest == false)
+	{
+		sf::Vector2f dir1 = c.getPos();
+		sf::Vector2f dir2 = kidSave->getPos();
+		sf::Vector2f dir = (dir1 - dir2);
+		kidSave->movePos(dir.x * dtime, dir.y * dtime);
+	}
 
 
 	if (TransitionController::playing != nullptr && TransitionController::playing->isDone() == false)
@@ -284,6 +306,15 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 	//Collision Detection
 	if (c.Collider.getGlobalBounds().intersects(questGiverContact.getGlobalBounds()))
 	{
+		if (Global::haveSon == true && Global::doneFirstQuest == false)
+		{
+			Global::doneFirstQuest = true;
+			removeFromRender(questGiverText);
+			questGiverGive->changeText("Thank you soo much adventurer!");
+			render.push_back(questGiverGive);
+			removeFromRender(kidSave);
+			textQuestGiverver = 3;
+		}
 		questGiverGive->update(dtime);
 		if (textQuestGiverver == 0)
 		{
@@ -305,6 +336,12 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 			removeFromRender(Global::ChatBox);
 			removeFromRender(questGiverGive);
 			textQuestGiverver = 2;
+		}
+		if (textQuestGiverver == 2)
+		{
+			removeFromRender(questGiverGive);
+			removeFromRender(Global::ChatBox);
+			removeFromRender(questGiverText);
 		}
 	}
 

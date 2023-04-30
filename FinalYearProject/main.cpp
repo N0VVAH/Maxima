@@ -14,6 +14,7 @@ Square* Global::ChatBox = new Square("..\\assets\\images\\textbox.png", 450, 150
 player* Global::Player = new player();
 sf::View* Global::mainView = new sf::View();
 bool Global::updateView = false;
+bool Global::doneFirstQuest = false;
 
 int main()
 {

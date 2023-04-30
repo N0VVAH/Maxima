@@ -14,6 +14,7 @@ public:
 	virtual void* onClick() override;
 	virtual void setClick(void*) override;
 	virtual void setPos(float xPos, float yPos) override;
+	inline virtual sf::Vector2f getPos() override { return chara.getPosition(); }
 	virtual void movePos(float xOffset, float yOffset) override;
 	inline sf::FloatRect getLocalBounds() override { return chara.getLocalBounds(); }
 	inline sf::FloatRect getGlobalBounds() override { return chara.getGlobalBounds(); }

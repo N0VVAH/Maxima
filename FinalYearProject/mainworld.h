@@ -22,6 +22,7 @@ protected:
 	Square* questGiver;
 	Square questGiverContact;
 	Square* enemies[10] = {};
+	Square* kidSave;
 
 	Text* questGiverText;
 	textAppear* questGiverGive;
