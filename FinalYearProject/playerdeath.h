@@ -18,6 +18,7 @@ public:
 
 private:
 
+	Text* title;
 	buttonSprite* quit;
 	Text* quitText;
 	buttonSprite* loadLastSave;

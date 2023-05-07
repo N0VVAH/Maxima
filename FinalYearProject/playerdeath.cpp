@@ -11,7 +11,7 @@ PlayerDeath::PlayerDeath(scene* ls)
 	backGround.setPos(800, 400);
 
 	quit = new buttonSprite(200, 75, sf::Color::Black);
-	quit->setPos(800, 300);
+	quit->setPos(800, 400);
 	quit->setClick(&clickQuick);
 
 	textProps p;
@@ -20,19 +20,28 @@ PlayerDeath::PlayerDeath(scene* ls)
 	p.string = "Quit Game";
 
 	quitText = new Text(p);
-	quitText->setPos(800, 300);
+	quitText->setPos(800, 400);
 
+	p.string = "You Have Died...";
+	p.col = sf::Color::Black;
+	p.fontSize = 36;
+	title = new Text(p);
+	title->setPos(800, 200);
+
+	p.fontSize = 24;
+	p.col = sf::Color::White;
 	loadLastSave = new buttonSprite(200, 75, sf::Color::Black);
-	loadLastSave->setPos(800, 500);
+	loadLastSave->setPos(800, 600);
 	loadLastSave->setClick(&loadMainMenu);
 
 	p.string = "Play Again";
 	loadText = new Text(p);
-	loadText->setPos(800, 500);
+	loadText->setPos(800, 600);
 
 
 	render.push_back(&backGround);
 
+	UI.push_back(title);
 	UI.push_back(quit);
 	UI.push_back(quitText);
 	UI.push_back(loadLastSave);
