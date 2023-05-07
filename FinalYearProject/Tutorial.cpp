@@ -128,6 +128,8 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 
 	if (*fightDone == 1)
 	{
+		Global::ChatBox->setPos(575, 725);
+		Global::ChatBox->setSize(500, 150);
 		beenInFight = true;
 		tutorialText->updateText("Wow! Your a natural at combat, you shouldn't have any\nproblems in Maxima.\nGo head north (or up) to head in to the town.");
 		*fightDone = 0;

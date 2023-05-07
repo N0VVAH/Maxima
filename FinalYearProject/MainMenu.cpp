@@ -7,13 +7,17 @@
 
 MainMenu::MainMenu()
 {
+	Global::Player = new player();
+	Global::Player->moves.push_back(MoveController::getMove(10));
+	Global::Player->moves.push_back(MoveController::getMove(11));
+
 	background = new Square("..\\assets\\images\\backgrounds\\mainmenu.png", 3200, 3200);
 	background->setPos(800, 400);
 	render.push_back(background);
 
-	player = new Square("..\\assets\\images\\playersingle.png", 128, 128);
-	player->setPos(200, 200);
-	render.push_back(player);
+	p = new Square("..\\assets\\images\\playersingle.png", 128, 128);
+	p->setPos(200, 200);
+	render.push_back(p);
 
 
 	UI.push_back(new buttonSprite(300, 100, sf::Color::White));

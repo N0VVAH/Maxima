@@ -13,3 +13,4 @@ char Inv();
 char Flee();
 
 //playerdeath
+void loadMainMenu();

@@ -162,7 +162,6 @@
     <ClCompile Include="MainWorld.cpp" />
     <ClCompile Include="MainWorldWest.cpp" />
     <ClCompile Include="moves.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="playerdeath.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sound.cpp" />

@@ -1,5 +1,7 @@
 #pragma once
 #include "scene.h"
+#include "buttonSprite.h"
+#include "text.h"
 
 
 class PlayerDeath : public scene
@@ -16,10 +18,10 @@ public:
 
 private:
 
-	sprite* quit;
-	sprite* quitText;
-	sprite* loadLastSave;
-	sprite* loadText;
+	buttonSprite* quit;
+	Text* quitText;
+	buttonSprite* loadLastSave;
+	Text* loadText;
 	Square backGround = Square(sf::Color::White, 1600, 800);
 
 

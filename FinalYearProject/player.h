@@ -7,7 +7,22 @@
 class player
 {
 public:
-	player();
+	player()
+	{
+		name = "Adventurer";
+		health = 10;
+		stamina = 10;
+		maxhealth = 10;
+		maxstamina = 10;
+		gold = 0;
+		for (size_t i = 0; i < 6; i++)
+		{
+			stats[i] = 1;
+		}
+		moves.empty();
+		inv.empty();
+		invsize = 6;
+	};
 	const char* name = "ANAKIN SKYWALKER";
 	std::vector<move*> moves;
 	int health = 10;

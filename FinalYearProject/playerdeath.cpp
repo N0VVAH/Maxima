@@ -21,14 +21,15 @@ PlayerDeath::PlayerDeath(scene* ls)
 
 	quitText = new Text(p);
 	quitText->setPos(800, 300);
-	
 
 	loadLastSave = new buttonSprite(200, 75, sf::Color::Black);
 	loadLastSave->setPos(800, 500);
+	loadLastSave->setClick(&loadMainMenu);
 
-	p.string = "Load Save";
+	p.string = "Play Again";
 	loadText = new Text(p);
 	loadText->setPos(800, 500);
+
 
 	render.push_back(&backGround);
 
@@ -54,7 +55,7 @@ void PlayerDeath::update(sf::RenderWindow* window, float dtime)
 		case sf::Event::MouseButtonPressed:
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				mouseDownPos = sf::Mouse::getPosition();
+				mouseDownPos = { events->mouseButton.x, events->mouseButton.y };
 			}
 
 			break;
@@ -62,6 +63,26 @@ void PlayerDeath::update(sf::RenderWindow* window, float dtime)
 		case sf::Event::MouseButtonReleased:
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false && mouseDownPos != sf::Vector2i())
 			{
+
+				mouseUpPos = { events->mouseButton.x, events->mouseButton.y };
+				for (size_t i = 0; i < UI.size(); i++)
+				{
+					if (UI[i]->getGlobalBounds().contains(mouseDownPos.x, mouseDownPos.y) && UI[i]->getGlobalBounds().contains(mouseUpPos.x, mouseUpPos.y))
+					{
+						if (UI[i]->type == 'S')
+						{
+							loadScene(((scene * (*)())UI[i]->onClick())());
+						}
+						else
+						{
+							((void(*)())UI[i]->onClick())();
+							delete prevScene;
+							return;
+						}
+
+					}
+				}
+
 				mouseDownPos = sf::Vector2i();
 			}
 
@@ -78,6 +99,8 @@ char PlayerDeath::inputHandler()
 
 void PlayerDeath::exitScene()
 {
+	closeScene();
+	Global::curScene = prevScene;
 }
 
 void PlayerDeath::closeScene()
@@ -86,7 +109,7 @@ void PlayerDeath::closeScene()
 	delete quitText;
 	delete loadLastSave;
 	delete loadText;
-	Global::curScene = prevScene;
+
 }
 
 void PlayerDeath::loadScene(scene*)

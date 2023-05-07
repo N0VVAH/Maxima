@@ -1,5 +1,6 @@
 #include "buttonfuncs.h"
 #include "tutorial.h"
+#include "mainmenu.h"
 #include <iostream>
 
 sf::Window* Global::window = nullptr;
@@ -40,4 +41,10 @@ char Inv()
 char Flee()
 {
 	return 'f';
+}
+
+//DeathScene
+void loadMainMenu()
+{
+	Global::curScene = new MainMenu();
 }

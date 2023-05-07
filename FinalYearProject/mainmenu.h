@@ -16,7 +16,7 @@ protected:
 
 private:
 	Square* background;
-	Square* player;
+	Square* p;
 	sf::Vector2f viewPos;
 	float yMovement = 0.0f;
 	float xMovement = 0.0f;
