@@ -267,7 +267,9 @@ void combat::update(sf::RenderWindow* window, float dtime)
 							}
 							else if (UI[i]->type == 'M')
 							{
-								move* clickedMove = MoveController::getMove((uint32_t)UI[i]->getData());
+								
+								move* clickedMove = nullptr;
+								clickedMove = MoveController::getMove((uint32_t)UI[i]->getData());
 								//std::cout << clickedMove->name << "\n";
 								moveSelected(clickedMove);
 								break;
