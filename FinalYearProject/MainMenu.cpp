@@ -3,6 +3,7 @@
 #include "buttonSprite.h"
 #include "buttonfuncs.h"
 #include <chrono>
+#include "quest.h"
 
 
 MainMenu::MainMenu()
@@ -10,6 +11,9 @@ MainMenu::MainMenu()
 	Global::Player = new player();
 	Global::Player->moves.push_back(MoveController::getMove(10));
 	Global::Player->moves.push_back(MoveController::getMove(11));
+	Global::haveSon = false;
+	Global::doneFirstQuest = false;
+	Quest::removeAllQuests();
 
 	background = new Square("..\\assets\\images\\backgrounds\\mainmenu.png", 3200, 3200);
 	background->setPos(800, 400);

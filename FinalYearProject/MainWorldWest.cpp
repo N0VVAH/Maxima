@@ -3,6 +3,7 @@
 #include "sound.h"
 #include "combat.h"
 #include <chrono>
+#include "quest.h"
 
 MainWorldWest::MainWorldWest()
 {
@@ -293,6 +294,8 @@ void MainWorldWest::update(sf::RenderWindow* window, float dtime)
 				render.push_back(Global::ChatBox);
 				render.push_back(cantRightNow);
 				Global::haveSon = true;
+				Quest::removeAllQuests();
+				Quest::setQuest("Return Child to Their Mother");
 			}
 			else
 			{
@@ -377,6 +380,7 @@ void MainWorldWest::draw(sf::RenderTarget& target, sf::RenderStates states)
 			}
 		}
 	}
+	Quest::render(target, states);
 }
 
 char MainWorldWest::inputHandler()

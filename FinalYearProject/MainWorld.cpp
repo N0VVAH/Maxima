@@ -2,6 +2,7 @@
 #include "Transitions.h"
 #include "sound.h"
 #include "mainworldwest.h"
+#include "quest.h"
 
 bool Global::haveSon = false;
 
@@ -106,7 +107,7 @@ MainWorld::MainWorld(scene* s)
 	}
 
 
-	questGiverText->setPos(575, 100);
+	questGiverText->setPos(675, 250);
 
 	if (Global::haveSon == false)
 	{
@@ -117,7 +118,7 @@ MainWorld::MainWorld(scene* s)
 		p.string = "Thank you so much adventurer!";
 	}
 	questGiverGive = new textAppear(p, 0.05f);
-	questGiverGive->setPos(590, 100);
+	questGiverGive->setPos(690, 250);
 	if (Global::haveSon == true)
 	{
 		render.push_back(questGiverGive);
@@ -170,7 +171,7 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 			enemies[i]->update(dtime);
 		}
 
-		Global::ChatBox->setPos(575, 100);
+		Global::ChatBox->setPos(675, 250);
 		Global::ChatBox->setSize(500, 150);
 	}
 
@@ -319,7 +320,9 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 		{
 			Global::doneFirstQuest = true;
 			removeFromRender(questGiverText);
+			render.push_back(Global::ChatBox);
 			questGiverGive->changeText("Thank you soo much adventurer!");
+			Quest::removeAllQuests();
 			render.push_back(questGiverGive);
 			removeFromRender(kidSave);
 			textQuestGiverver = 3;
@@ -329,6 +332,7 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 		{
 			removeFromRender(questGiverText);
 			render.push_back(questGiverGive);
+			Quest::setQuest("Go West and Save Child");
 			textQuestGiverver = 1;
 		}
 		if (textQuestGiverver == 2)
@@ -407,6 +411,8 @@ void MainWorld::draw(sf::RenderTarget& target, sf::RenderStates states)
 			}
 		}
 	}
+
+	Quest::render(target, states);
 }
 
 char MainWorld::inputHandler()

@@ -5,6 +5,7 @@
 #include "iostream"
 #include "Transitions.h"
 #include "sound.h"
+#include "quest.h"
 
 void startUp();
 
@@ -15,6 +16,8 @@ player* Global::Player = new player();
 sf::View* Global::mainView = new sf::View();
 bool Global::updateView = false;
 bool Global::doneFirstQuest = false;
+std::string Quest::quests = "";
+Text* Quest::toDisplay = nullptr;
 
 int main()
 {
@@ -85,4 +88,6 @@ void startUp()
 	ItemManager::ItemManager();
 
 	SoundsController::init();
+
+	Quest::init();
 }
