@@ -49,4 +49,5 @@ protected:
 	bool renderCollider = false;
 
 private:
+	bool paused = false;
 };

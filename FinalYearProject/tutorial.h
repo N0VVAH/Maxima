@@ -42,4 +42,5 @@ protected:
 
 private:
 	bool chatboxShowing = false;
+	bool paused = false;
 };

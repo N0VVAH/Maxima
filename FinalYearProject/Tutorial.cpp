@@ -116,14 +116,17 @@ Tutorial::Tutorial(scene* preScene)
 void Tutorial::update(sf::RenderWindow* window, float dtime)
 {
 	//sprite updates
-	c.update(dtime);
-	Teach.update(dtime);
-	
 
-	for (int i = 0; i < 10; i++)
+	if (paused == false)
 	{
-		enemies[i]->update(dtime);
+		for (int i = 0; i < 10; i++)
+		{
+			enemies[i]->update(dtime);
+		}
+		c.update(dtime);
+		Teach.update(dtime);
 	}
+
 
 
 	if (*fightDone == 1)
@@ -153,6 +156,11 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		{
 
 		case sf::Event::KeyPressed:
+			if ((*events).key.code == sf::Keyboard::Escape)
+			{
+				paused = !paused;
+				return;
+			}
 			if ((*events).key.code == sf::Keyboard::Enter)
 			{
 				if (tutorialText->isDone() == true && beenInFight == false)
@@ -233,6 +241,10 @@ void Tutorial::update(sf::RenderWindow* window, float dtime)
 		}
 	}
 
+	if (paused)
+	{
+		return;
+	}
 
 	sf::Vector2f movement = sf::Vector2f(0.0f, 0.0f);
 

@@ -162,14 +162,18 @@ MainWorld::MainWorld(scene* s)
 void MainWorld::update(sf::RenderWindow* window, float dtime)
 {
 	//sprite updates
-	c.update(dtime);
-	for (int i = 0; i < 10; i++)
+	if (paused == false)
 	{
-		enemies[i]->update(dtime);
+		c.update(dtime);
+		for (int i = 0; i < 10; i++)
+		{
+			enemies[i]->update(dtime);
+		}
+
+		Global::ChatBox->setPos(575, 100);
+		Global::ChatBox->setSize(500, 150);
 	}
 
-	Global::ChatBox->setPos(575, 100);
-	Global::ChatBox->setSize(500, 150);
 
 	if (fightDone == new bool(true))
 	{
@@ -208,12 +212,15 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 
 
 		case sf::Event::KeyPressed:
+			if ((*events).key.code == sf::Keyboard::Escape)
+			{
+				paused = !paused;
+				return;
+			}
 			if ((*events).key.code == sf::Keyboard::Enter)
 			{
 				questGiverGive->changeSpeed(0.025f);
 			}
-
-
 
 			switch ((*events).key.code)
 			{
@@ -224,7 +231,6 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 				break;
 			}
 			break;
-
 			render[0] = &c;
 
 		case sf::Event::KeyReleased:
@@ -280,7 +286,10 @@ void MainWorld::update(sf::RenderWindow* window, float dtime)
 			break;
 		}
 	}
-
+	if (paused)
+	{
+		return;
+	}
 
 	sf::Vector2f movement = sf::Vector2f(0.0f, 0.0f);
 

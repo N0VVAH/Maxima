@@ -115,46 +115,50 @@ MainWorldWest::MainWorldWest(scene* s)
 void MainWorldWest::update(sf::RenderWindow* window, float dtime)
 {
 	//sprite updates
-	if (TransitionController::playing != nullptr && TransitionController::playing->isDone() == false)
+	if (paused == false)
 	{
-		TransitionController::playing->update(dtime);
-		return;
-	}
-	Global::ChatBox->setPos(1000, 700);
-	Global::ChatBox->setSize(500, 150);
-	if (noEnemy == true && Global::haveSon == true && Global::doneFirstQuest == false)
-	{
-		sf::Vector2f dir1 = c.getPos();
-		sf::Vector2f dir2 = kidSave->getPos();
-		sf::Vector2f dir = (dir1 - dir2);
-		kidSave->movePos(dir.x * dtime, dir.y * dtime);
-	}
 
-	noEnemy = true;
-	for (size_t i = 0; i < 4; i++)
-	{
-		if (enemies[i]->getPos().x > 0)
+		if (TransitionController::playing != nullptr && TransitionController::playing->isDone() == false)
 		{
-			noEnemy = false;
+			TransitionController::playing->update(dtime);
+			return;
 		}
-	}
-	if (noEnemy == true)
-	{
-		removeFromRender(kidCage);
-	}
+		Global::ChatBox->setPos(1000, 700);
+		Global::ChatBox->setSize(500, 150);
+		if (noEnemy == true && Global::haveSon == true && Global::doneFirstQuest == false)
+		{
+			sf::Vector2f dir1 = c.getPos();
+			sf::Vector2f dir2 = kidSave->getPos();
+			sf::Vector2f dir = (dir1 - dir2);
+			kidSave->movePos(dir.x * dtime, dir.y * dtime);
+		}
 
-	c.update(dtime);
-	for (int i = 0; i < 4; i++)
-	{
-		enemies[i]->update(dtime);
-	}
+		noEnemy = true;
+		for (size_t i = 0; i < 4; i++)
+		{
+			if (enemies[i]->getPos().x > 0)
+			{
+				noEnemy = false;
+			}
+		}
+		if (noEnemy == true)
+		{
+			removeFromRender(kidCage);
+		}
+
+		c.update(dtime);
+		for (int i = 0; i < 4; i++)
+		{
+			enemies[i]->update(dtime);
+		}
 
 
-	if (fightDone == new int(1))
-	{
-		delete fightDone;
-		delete combatScene;
+		if (fightDone == new int(1))
+		{
+			delete fightDone;
+			delete combatScene;
 
+		}
 	}
 
 
@@ -175,9 +179,10 @@ void MainWorldWest::update(sf::RenderWindow* window, float dtime)
 
 
 		case sf::Event::KeyPressed:
-			if ((*events).key.code == sf::Keyboard::Enter)
+			if ((*events).key.code == sf::Keyboard::Escape)
 			{
-
+				paused = !paused;
+				return;
 			}
 
 
@@ -243,7 +248,10 @@ void MainWorldWest::update(sf::RenderWindow* window, float dtime)
 			break;
 		}
 	}
-
+	if (paused)
+	{
+		return;
+	}
 
 	sf::Vector2f movement = sf::Vector2f(0.0f, 0.0f);
 
