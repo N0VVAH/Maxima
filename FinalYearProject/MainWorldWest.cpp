@@ -78,6 +78,7 @@ MainWorldWest::MainWorldWest(scene* s)
 				{
 					if (enemies[k]->getPos().y > kidSave->getPos().y - 50 && enemies[k]->getPos().y < kidSave->getPos().y + 50)
 					{
+						std::srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 						goto here;
 					}
 				}
@@ -88,6 +89,7 @@ MainWorldWest::MainWorldWest(scene* s)
 				{
 					if (enemies[k]->getPos().y > enemies[i]->getPos().y - 30 && enemies[k]->getPos().y < enemies[i]->getPos().y + 60)
 					{
+						std::srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 						goto here;
 					}
 				}
